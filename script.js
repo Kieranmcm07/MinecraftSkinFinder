@@ -39,8 +39,6 @@ async function loadSkin() {
 
     skinImg.onload = () => {
       skinImg.classList.add("loaded");
-      downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
-      downloadLink.download = `${username}_skin.png`;
       downloadLink.classList.remove("hidden");
     };
 
@@ -101,10 +99,24 @@ function toggleAbout() {
 document
   .getElementById("download-link")
   .addEventListener("click", function (e) {
+    e.preventDefault();
+
     if (!currentUUID) {
-      e.preventDefault();
       showErrorState("No skin loaded to download!");
+      return;
     }
+
+    const username =
+      document.getElementById("username").value.trim() || "minecraft";
+    const downloadUrl = `https://crafatar.com/skins/${currentUUID}?t=${Date.now()}`;
+
+    // Create temporary link
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = `${username}_skin.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   });
 
 // Initial setup

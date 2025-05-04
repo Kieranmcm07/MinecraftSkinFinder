@@ -227,7 +227,7 @@ body {
 
 .skin-history-container {
   position: fixed;
-  left: 30px;
+  right: 30px;
   top: 200px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
@@ -237,6 +237,7 @@ body {
   overflow-y: auto;
   z-index: 1000;
   border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--mc-border);
 }
 
 .skin-history-item {
