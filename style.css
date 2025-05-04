@@ -1,3 +1,4 @@
+/* === Main Styles === */
 :root {
   --mc-green: #5b7c3d;
   --mc-dark: #2d2d2d;
@@ -6,7 +7,34 @@
   --purple-glow: #9d4dff;
 }
 
-/* Enhanced Animations */
+body {
+  background: #1a1a1a;
+  font-family: "Minecraft", sans-serif;
+  color: var(--mc-text);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+/* === Animated Background === */
+.animated-bg {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.pixel-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--mc-green);
+  animation: float 6s infinite linear;
+  opacity: 0.1;
+}
+
 @keyframes float {
   0% {
     transform: translateY(100vh) rotate(0deg) scale(0.8);
@@ -16,6 +44,47 @@
   }
 }
 
+/* === Header Styles === */
+.title {
+  color: var(--mc-green);
+  text-shadow: 2px 2px #000;
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  letter-spacing: 2px;
+  animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px var(--mc-green);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--mc-green);
+  }
+}
+
+/* === Skin Viewer Container === */
+.skin-viewer {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.skin-image {
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 4px solid var(--mc-border);
+  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
+    4px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: skinLoad 1s ease-out;
+}
+
+/* === Enhanced Animations === */
 @keyframes skinLoad {
   0% {
     transform: perspective(1000px) rotateX(90deg) scale(0.8);
@@ -27,10 +96,7 @@
   }
 }
 
-.glow-text {
-  animation: textGlow 2s ease-in-out infinite;
-}
-
+/* === GitHub Link Styles === */
 .github-link {
   background: linear-gradient(45deg, #6e5494, #4078c0);
   -webkit-background-clip: text;
@@ -43,11 +109,16 @@
   text-shadow: 0 0 10px rgba(110, 84, 148, 0.3);
 }
 
-.download-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.github-link:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 15px rgba(110, 84, 148, 0.5);
+}
+
+/* === 3D Viewer Styles === */
+#3d-toggle.active {
+  background: var(--purple-glow);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--purple-glow);
 }
 
 .skin-wrapper {
@@ -55,11 +126,16 @@
   transition: transform 0.5s;
 }
 
-#3d-toggle.active {
-  background: var(--purple-glow);
-  transform: scale(1.05);
+/* === Download Button Fix === */
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  position: relative;
 }
 
+/* === Skin History Panel === */
 .skin-history {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -73,6 +149,7 @@
   border: 2px solid var(--mc-border);
   cursor: pointer;
   transition: all 0.2s;
+  text-align: center;
 }
 
 .skin-history-item:hover {
