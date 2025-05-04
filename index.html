@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Minecraft Skin Viewer</title>
   <style>
     body {
@@ -12,20 +12,53 @@
     input {
       padding: 8px;
       font-size: 16px;
+      width: 250px;
     }
     button {
-      padding: 8px 12px;
+      padding: 8px 16px;
       font-size: 16px;
       cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
     }
-    img {
+    #skin-container {
+      margin: 20px auto;
+      max-width: 512px;
+    }
+    .download-btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 8px 16px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .model-toggle {
+      margin: 10px;
+      padding: 8px 16px;
+      background-color: #FF9800;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
       margin-top: 20px;
+    }
+    .loading {
+      color: #2196F3;
     }
   </style>
 </head>
 <body>
   <h1>Minecraft Skin Viewer</h1>
-  <input id="username" placeholder="Enter Minecraft Username" />
+  <input id="username" placeholder="Enter Minecraft Username" value="Notch" />
   <button onclick="getSkin()">View Skin</button>
   <div id="output"></div>
 
@@ -33,33 +66,89 @@
     async function getSkin() {
       const username = document.getElementById('username').value.trim();
       const output = document.getElementById('output');
-      output.innerHTML = "Loading...";
+      output.innerHTML = "<p class='loading'>Loading...</p>";
 
       if (!username) {
-        output.innerHTML = "<p style='color: red;'>Please enter a username.</p>";
+        output.innerHTML = "<p class='error'>Please enter a username.</p>";
         return;
       }
 
       try {
-        // Use a CORS proxy to avoid CORS errors
-        const res = await fetch(`https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${username}`);
+        // First try the direct Mojang API
+        let uuid = await getUUID(username);
         
-        if (!res.ok) throw new Error("Username not found.");
-        
-        const data = await res.json();
-        const uuid = data.id;
+        if (!uuid) {
+          // If Mojang API fails, try via Craftar's UUID lookup
+          uuid = await getUUIDFromCrafatar(username);
+        }
 
-        // Show the skin and avatar
-        output.innerHTML = `
-          <h2>${username}'s Skin</h2>
-          <img src="https://crafatar.com/renders/body/${uuid}?size=512" alt="Skin" />
-          <br><br>
-          <img src="https://crafatar.com/avatars/${uuid}?size=100" alt="Avatar" />
-        `;
+        if (!uuid) {
+          throw new Error("Username not found");
+        }
+
+        displaySkin(uuid, username);
       } catch (e) {
-        output.innerHTML = `<p style="color: red;">Error: ${e.message}</p>`;
+        output.innerHTML = `<p class='error'>Error: ${e.message}. Make sure the username is correct.</p>`;
+        console.error(e);
       }
     }
+
+    async function getUUID(username) {
+      try {
+        const res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(username)}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.id;
+      } catch {
+        return null;
+      }
+    }
+
+    async function getUUIDFromCrafatar(username) {
+      try {
+        const res = await fetch(`https://crafatar.com/users/${encodeURIComponent(username)}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data.id;
+      } catch {
+        return null;
+      }
+    }
+
+    function displaySkin(uuid, username) {
+      const output = document.getElementById('output');
+      output.innerHTML = `
+        <h2>${username}'s Skin</h2>
+        <button class="model-toggle" onclick="toggleModel('${uuid}', '${username}')">Toggle Model (Classic/Slim)</button>
+        <div id="skin-container">
+          <img src="https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay" alt="Skin" />
+        </div>
+        <div>
+          <a href="https://crafatar.com/skins/${uuid}" class="download-btn" download="${username}-skin.png">Download Skin</a>
+          <a href="https://crafatar.com/avatars/${uuid}?size=128" class="download-btn" download="${username}-avatar.png">Download Avatar</a>
+        </div>
+        <p>UUID: ${uuid}</p>
+      `;
+    }
+
+    function toggleModel(uuid, username) {
+      const skinContainer = document.getElementById('skin-container');
+      const currentImg = skinContainer.querySelector('img');
+      const currentSrc = currentImg.src;
+      
+      if (currentSrc.includes('&model=classic')) {
+        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=slim`;
+      } else if (currentSrc.includes('&model=slim')) {
+        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=classic`;
+      } else {
+        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=slim`;
+      }
+    }
+
+    // Load default skin on page load
+    window.onload = function() {
+      getSkin();
+    };
   </script>
 </body>
 </html>
