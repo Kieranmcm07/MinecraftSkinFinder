@@ -1,63 +1,50 @@
+let currentUUID = null;
 let currentModel = "classic";
-let currentUUID = "";
 
-async function getSkin() {
+async function loadSkin() {
   const username = document.getElementById("username").value.trim();
-  if (!username) return;
+  if (!username) return showErrorState();
 
   try {
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
+    if (!response.ok) throw new Error("Player not found");
+
     const data = await response.json();
-
     currentUUID = data.id;
-    const displayName = data.name || username;
 
-    document.getElementById(
-      "skin-image"
-    ).src = `https://crafatar.com/renders/body/${currentUUID}?size=512&model=${currentModel}`;
+    const skinImg = document.getElementById("skin-image");
+    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
 
-    const downloadBtn = document.getElementById("download-btn");
-    downloadBtn.href = `https://crafatar.com/skins/${currentUUID}`;
-    downloadBtn.classList.remove("hidden");
+    const downloadLink = document.getElementById("download-link");
+    downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
+    downloadLink.classList.remove("hidden");
 
-    // Enderman effect
-    const enderman = document.getElementById("enderman");
-    enderman.style.left = `${Math.random() * 80}%`;
-    enderman.style.opacity = "1";
-    setTimeout(() => (enderman.style.opacity = "0"), 1000);
+    document.getElementById("error-message").classList.add("hidden");
   } catch (error) {
-    alert("Error: " + error.message);
+    showErrorState();
+    console.error("Error:", error.message);
   }
 }
 
 function toggleModel() {
+  if (!currentUUID) return;
   currentModel = currentModel === "classic" ? "slim" : "classic";
   document.getElementById(
     "skin-image"
-  ).src = `https://crafatar.com/renders/body/${currentUUID}?size=512&model=${currentModel}`;
-
-  // Add flip animation
-  const skinImage = document.getElementById("skin-image");
-  skinImage.style.transform = "rotateY(180deg)";
-  setTimeout(() => (skinImage.style.transform = "rotateY(0deg)"), 500);
+  ).src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
 }
 
-// Create particles
-function createParticles() {
-  const container = document.getElementById("particles");
-  for (let i = 0; i < 50; i++) {
-    const particle = document.createElement("div");
-    particle.className = "particle";
-    particle.style.left = Math.random() * 100 + "%";
-    particle.style.width = particle.style.height = Math.random() * 4 + "px";
-    particle.style.animationDuration = Math.random() * 5 + 3 + "s";
-    container.appendChild(particle);
-  }
+function showErrorState() {
+  const skinContainer = document.getElementById("skin-container");
+  const errorBox = document.getElementById("error-message");
+  const skinImg = document.getElementById("skin-image");
+
+  skinImg.src = "https://i.imgur.com/9E8ZzJG.png"; // 404 image
+  errorBox.classList.remove("hidden");
+  document.getElementById("download-link").classList.add("hidden");
 }
 
-window.onload = () => {
-  createParticles();
-  document.getElementById("username").value = "Kieran";
-};
+// Initial load with error state
+window.onload = showErrorState;
