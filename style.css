@@ -3,228 +3,79 @@
   --mc-dark: #2d2d2d;
   --mc-border: #4a4a4a;
   --mc-text: #ffffff;
-  --glow-color: rgba(91, 124, 61, 0.4);
+  --purple-glow: #9d4dff;
 }
 
-/* Floating Pixel Background */
-.animated-bg {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.pixel-particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--mc-green);
-  animation: float 6s infinite linear;
-  opacity: 0.1;
-}
-
+/* Enhanced Animations */
 @keyframes float {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(100vh) rotate(0deg) scale(0.8);
   }
   100% {
-    transform: translateY(-100vh) rotate(360deg);
+    transform: translateY(-100vh) rotate(360deg) scale(1.2);
   }
 }
 
-body {
-  background: #1a1a1a;
-  font-family: "Minecraft", sans-serif;
-  color: var(--mc-text);
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-}
-
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.title {
-  color: var(--mc-green);
-  text-shadow: 2px 2px #000;
-  font-size: 2.5rem;
-  margin: 1rem 0;
-  letter-spacing: 2px;
-  animation: titleGlow 2s ease-in-out infinite;
-}
-
-@keyframes titleGlow {
-  0%,
-  100% {
-    text-shadow: 0 0 10px var(--mc-green);
-  }
-  50% {
-    text-shadow: 0 0 20px var(--mc-green);
-  }
-}
-
-.search-box {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.minecraft-input {
-  padding: 12px;
-  border: 3px solid var(--mc-border);
-  background: var(--mc-dark);
-  color: var(--mc-text);
-  font-family: "Minecraft";
-  font-size: 1.1rem;
-  width: 300px;
-  image-rendering: pixelated;
-  transition: all 0.3s;
-}
-
-.minecraft-btn {
-  padding: 12px 24px;
-  background: var(--mc-green);
-  border: 3px solid var(--mc-border);
-  color: white;
-  font-family: "Minecraft";
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  image-rendering: pixelated;
-  position: relative;
-  overflow: hidden;
-}
-
-.minecraft-btn:hover {
-  background: #6b8c4d;
-  transform: translateY(-2px);
-}
-
-.btn-shine {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 80%
-  );
-  animation: btnShine 3s infinite;
-  pointer-events: none;
-}
-
-@keyframes btnShine {
+@keyframes skinLoad {
   0% {
-    transform: translateX(-100%) rotate(45deg);
+    transform: perspective(1000px) rotateX(90deg) scale(0.8);
+    opacity: 0;
   }
   100% {
-    transform: translateX(100%) rotate(45deg);
+    transform: perspective(1000px) rotateX(0) scale(1);
+    opacity: 1;
   }
 }
 
-.skin-viewer {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 2rem;
+.glow-text {
+  animation: textGlow 2s ease-in-out infinite;
 }
 
-.skin-image {
-  width: 100%;
-  height: 600px;
-  object-fit: contain;
-  image-rendering: pixelated;
-  border: 4px solid var(--mc-border);
-  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
-    4px;
-  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.error-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--mc-dark);
-  padding: 2rem;
-  text-align: center;
-  border: 4px solid #ff4444;
-  z-index: 200;
-  transition: opacity 0.3s;
-  animation: errorPulse 1s infinite;
-}
-
-@keyframes errorPulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
-  }
-}
-
-.info-box {
-  background: var(--mc-dark);
-  padding: 1.5rem;
-  border: 4px solid var(--mc-border);
-  margin-bottom: 1rem;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.github-link {
+  background: linear-gradient(45deg, #6e5494, #4078c0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 3px;
+  transition: all 0.3s;
+  text-shadow: 0 0 10px rgba(110, 84, 148, 0.3);
 }
 
 .download-btn {
-  background: #3d7c7c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.model-btn {
-  background: #7c3d3d;
+.skin-wrapper {
+  perspective: 1000px;
+  transition: transform 0.5s;
 }
 
-.loading-spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 64px;
-  height: 64px;
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAOVBMVEVHcEz///////////////////////////9Z8cTBAAAAEnRSTlMAECAwQFBgcICPn6+/z9/v9x+6oWIAAAEkSURBVFjD7ZfLDoMgDETxQlE8Vvz/p61paKq0q1n3YhKTNolwHAq0YFhCJpNJ6h6g6kD5Q1C+E5TPAOUjQPkEUL4AlA8A5T1AeQtQ3gGUNwDlNUB5B1BeAZQ3AOUFQHkFUN4AlOcA5QVAeQFQXgKUVwDlBUB5DlBeApTXAOUVQHkBUJ4DlFcA5QVAeQFQXgOUVwDlBUB5DlBeApTXAOUVQHkBUJ4DlFcA5QVAeQFQXgOUVwDlBUB5DlBeApTXAOUVQHkBUJ4DlFcA5QVAeQFQXgOUVwDlBUB5DlBeApTXAOUVQHkBUJ4DlFcA5QVAeQFQXgOUVwDlBUB5DlBeApTXAOUVQHkBUJ4DlFcA5T8A5T8A5RlAeQZQngGUZwDlBUB5DlBeApT/AJT/AJS3AOUtQHkLUN4ClLcA5S1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQHkHUN4BlHcA5R1AeQdQ3gGUdwDlHUB5B1DeAZR3AOUdQPkHwCx4VwXlO6s+AAAAAElFTkSuQmCC");
-  animation: minecraftSpin 1s steps(4) infinite;
-  transform: translate(-50%, -50%);
+#3d-toggle.active {
+  background: var(--purple-glow);
+  transform: scale(1.05);
 }
 
-@keyframes minecraftSpin {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -256px 0;
-  }
+.skin-history {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  margin-top: 10px;
 }
 
-.model-indicator {
-  color: var(--mc-green);
-  text-align: center;
-  font-size: 1.2rem;
-  margin: 10px 0;
-  text-shadow: 1px 1px #000;
+.skin-history-item {
+  padding: 5px;
+  background: var(--mc-dark);
+  border: 2px solid var(--mc-border);
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.hidden {
-  display: none !important;
+.skin-history-item:hover {
+  transform: translateY(-2px);
+  background: var(--mc-green);
 }

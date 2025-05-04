@@ -1,109 +1,95 @@
 let currentUUID = null;
 let currentModel = "classic";
+let is3DView = false;
+const skinHistory = [];
 
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
-  if (!username) return showErrorState("Please enter a username!");
+  if (!username) return showErrorState("Enter a Minecraft username!");
 
   try {
-    const skinContainer = document.getElementById("skin-container");
-    const loader = document.createElement("div");
-    loader.className = "loading-spinner";
-    skinContainer.appendChild(loader);
+    // Show animated loading
+    const skinWrapper = document.getElementById("skin-wrapper");
+    skinWrapper.classList.add("loading");
 
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
-
     if (!response.ok) throw new Error("Player not found");
+
     const data = await response.json();
     currentUUID = data.id;
 
-    const skinImg = document.getElementById("skin-image");
-    skinImg.style.transform = "rotateX(360deg)";
+    // Add to history
+    if (!skinHistory.includes(username)) {
+      skinHistory.unshift(username);
+      updateSkinHistory();
+    }
 
+    // Load skin with 3D effect
+    const skinImg = document.getElementById("skin-image");
+    skinImg.style.animation = "skinLoad 1s cubic-bezier(0.23, 1, 0.32, 1)";
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
 
     skinImg.onload = () => {
-      skinContainer.removeChild(loader);
-      skinImg.style.transform = "rotateX(0)";
+      skinWrapper.classList.remove("loading");
       updateModelIndicator();
-      document.getElementById("error-message").classList.add("hidden");
+      if (is3DView) enable3DView();
     };
 
+    // Update download link
     const downloadLink = document.getElementById("download-link");
     downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
     downloadLink.classList.remove("hidden");
   } catch (error) {
-    const skinContainer = document.getElementById("skin-container");
-    const loader = document.querySelector(".loading-spinner");
-    if (loader) skinContainer.removeChild(loader);
     showErrorState(error.message);
   }
 }
 
 function toggleModel() {
-  if (!currentUUID) {
-    showErrorState("Load a skin first!");
-    return;
-  }
+  if (!currentUUID) return;
   currentModel = currentModel === "classic" ? "slim" : "classic";
-  const skinImg = document.getElementById("skin-image");
-  skinImg.style.transform = "rotateY(180deg) scale(0.8)";
-  setTimeout(() => {
-    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
-    skinImg.style.transform = "rotateY(0) scale(1)";
-    updateModelIndicator();
-  }, 300);
+  document.getElementById(
+    "skin-image"
+  ).src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
+  updateModelIndicator();
 }
 
-function randomSkin() {
-  const users = ["Notch", "Dinnerbone", "Dream", "Technoblade", "Skeppy"];
-  document.getElementById("username").value =
-    users[Math.floor(Math.random() * users.length)];
+function enable3DView() {
+  const skinWrapper = document.getElementById("skin-wrapper");
+  skinWrapper.style.transform = "rotateX(15deg) rotateY(15deg)";
+  skinWrapper.addEventListener("mousemove", handle3DMove);
+  skinWrapper.addEventListener("mouseleave", reset3DView);
+}
+
+function handle3DMove(e) {
+  const { clientX, clientY } = e;
+  const { left, top, width, height } = e.target.getBoundingClientRect();
+  const x = (clientX - left - width / 2) / 30;
+  const y = (clientY - top - height / 2) / 30;
+  e.target.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+}
+
+function updateSkinHistory() {
+  const historyContainer = document.getElementById("skin-history");
+  historyContainer.innerHTML = skinHistory
+    .slice(0, 4)
+    .map(
+      (username) =>
+        `<div class="skin-history-item" onclick="loadUser('${username}')">${username}</div>`
+    )
+    .join("");
+}
+
+function loadUser(username) {
+  document.getElementById("username").value = username;
   loadSkin();
 }
 
-function updateModelIndicator() {
-  document.getElementById("model-indicator").textContent = `Current Model: ${
-    currentModel.charAt(0).toUpperCase() + currentModel.slice(1)
-  }`;
-}
-
-function showErrorState(message) {
-  const skinImg = document.getElementById("skin-image");
-  const errorBox = document.getElementById("error-message");
-
-  skinImg.src =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-
-  errorBox.querySelector("p").textContent = message;
-  errorBox.classList.remove("hidden");
-  document.getElementById("download-link").classList.add("hidden");
-
-  setTimeout(() => {
-    errorBox.classList.add("hidden");
-  }, 5000);
-}
-
-document
-  .getElementById("download-link")
-  .addEventListener("click", async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(e.target.href);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${document
-        .getElementById("username")
-        .value.trim()}_skin.png`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (error) {
-      showErrorState("Download failed!");
-    }
-  });
+// New 3D Viewer Toggle
+document.getElementById("3d-toggle").addEventListener("click", function () {
+  is3DView = !is3DView;
+  this.classList.toggle("active");
+  if (is3DView) enable3DView();
+  else reset3DView();
+});
