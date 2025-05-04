@@ -17,9 +17,11 @@ async function loadSkin() {
 
   try {
     const skinImg = document.getElementById("skin-image");
+    const placeholder = document.querySelector(".placeholder-box");
     const downloadLink = document.getElementById("download-link");
 
-    // Reset states
+    // Start transition
+    placeholder.style.opacity = "0";
     skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
 
@@ -32,7 +34,7 @@ async function loadSkin() {
     const data = await response.json();
     currentUUID = data.id;
 
-    // Load new skin with fade animation
+    // Load new skin
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&t=${Date.now()}`;
 
     skinImg.onload = () => {
@@ -46,6 +48,7 @@ async function loadSkin() {
     hideErrorState();
   } catch (error) {
     showErrorState(error.message);
+    document.querySelector(".placeholder-box").style.opacity = "1";
     skinImg.classList.remove("loaded");
   }
 }
@@ -101,9 +104,11 @@ document
     if (!currentUUID) {
       e.preventDefault();
       showErrorState("No skin loaded to download!");
-      return;
     }
   });
 
 // Initial setup
-renderHistory();
+window.addEventListener("load", () => {
+  document.querySelector(".placeholder-box").style.opacity = "1";
+  renderHistory();
+});

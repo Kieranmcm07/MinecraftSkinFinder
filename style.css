@@ -116,38 +116,46 @@ body {
   margin-top: 2rem;
 }
 
+#skin-container {
+  position: relative;
+  min-height: 600px;
+}
+
+.placeholder-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
+    4px;
+  border: 4px solid var(--mc-border);
+  animation: placeholderPulse 2s infinite;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes placeholderPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
 .skin-image {
+  position: relative;
+  z-index: 2;
   width: 100%;
   height: 600px;
   object-fit: contain;
   image-rendering: pixelated;
-  border: 4px solid var(--mc-border);
-  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
-    4px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.4s ease-out;
+  transition: opacity 0.5s ease;
 }
 
 .skin-image.loaded {
   opacity: 1;
-  transform: translateY(0);
-}
-
-.skin-image:hover {
-  transform: rotateZ(2deg) scale(1.02) translateY(-3px);
-  cursor: pointer;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .error-box {
