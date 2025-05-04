@@ -3,42 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minecraft Skin Viewer</title>
+    <title>Kieran's Skin Viewer</title>
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://raw.githubusercontent.com/yourusername/yourrepo/main/favicon.png"
-    />
+    <link rel="icon" type="image/png" href="https://i.imgur.com/zK3iW3R.png" />
   </head>
   <body>
     <div class="particles" id="particles"></div>
+    <div id="enderman" class="enderman-hidden"></div>
 
     <header class="header">
-      <h1 class="logo fade-in">Skin Viewer</h1>
-      <div class="search-container fade-in delay-1">
+      <h1 class="logo neon-text">SKIN VIEWER</h1>
+      <div class="search-container">
         <input
           type="text"
           id="username"
-          placeholder="Enter Minecraft Username"
+          placeholder="🔍 Enter Username"
+          class="glow-input"
         />
-        <button onclick="getSkin()">View Skin</button>
+        <button onclick="getSkin()" class="glow-btn">VIEW SKIN</button>
       </div>
     </header>
 
     <main class="main-content">
       <div class="skin-container" id="output">
-        <div class="loading">
-          <div class="loading-spinner"></div>
-          <p>Enter a username to view skin</p>
+        <div class="crystal-ball">
+          <div class="inner-glow">
+            <img id="skin-image" class="skin-image" />
+          </div>
+        </div>
+        <div class="controls">
+          <button onclick="toggleModel()" class="glow-btn model-btn">
+            🔄 TOGGLE MODEL
+          </button>
+          <a id="download-btn" class="glow-btn download-btn hidden"
+            >⬇️ DOWNLOAD SKIN</a
+          >
         </div>
       </div>
     </main>
 
-    <footer class="footer fade-in delay-2">
+    <footer class="footer neon-text">
       <p>
-        Created by
-        <a href="https://github.com/yourusername" target="_blank">Your Name</a>
+        Created by <span class="kieran-name">Kieran</span> |
+        <a href="https://github.com/yourgithub" target="_blank">GitHub</a>
       </p>
     </footer>
 

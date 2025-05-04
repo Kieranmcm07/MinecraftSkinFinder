@@ -1,200 +1,140 @@
 :root {
-  --primary: #4caf50;
-  --secondary: #2196f3;
-  --background: #141415;
-  --surface: #1e1e1f;
-  --text: #ffffff;
-  --text-secondary: #aaaaaa;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --neon-green: #4caf50;
+  --neon-purple: #9c27b0;
+  --dark-bg: #0a0a0a;
+  --particle-color: rgba(76, 175, 80, 0.3);
 }
 
 body {
-  font-family: "Arial", sans-serif;
-  background-color: var(--background);
-  color: var(--text);
+  font-family: "Minecraft", sans-serif;
+  background: var(--dark-bg);
+  color: white;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   overflow-x: hidden;
 }
 
-.header {
-  background: linear-gradient(
-    to bottom,
-    var(--background) 0%,
-    rgba(20, 20, 21, 0.8) 90%,
-    rgba(20, 20, 21, 0) 100%
-  );
-  padding: 2rem;
+/* Enderman effect */
+#enderman {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(10px);
+  width: 200px;
+  height: 300px;
+  background: url("https://i.imgur.com/3q6vCQE.png") center/contain no-repeat;
+  opacity: 0;
+  transition: all 0.5s;
+  pointer-events: none;
+  z-index: 999;
 }
 
-.logo {
-  font-size: 2rem;
-  font-weight: bold;
-  background: linear-gradient(45deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: transform 0.3s ease;
-}
-
-.search-container {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-input[type="text"] {
-  padding: 0.8rem;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  background: rgba(245, 245, 255, 0.05);
-  color: var(--text);
-  width: 300px;
-  transition: all 0.3s ease;
-}
-
-button {
-  padding: 0.8rem 1.5rem;
-  background: var(--primary);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-}
-
-.main-content {
-  flex: 1;
-  padding: 120px 2rem 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-.skin-container {
-  background: var(--surface);
-  border-radius: 1rem;
-  padding: 2rem;
-  width: 100%;
-  max-width: 800px;
-  min-height: 400px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: all 0.5s ease;
-}
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.footer {
+.header {
   text-align: center;
   padding: 2rem;
-  color: var(--text-secondary);
-}
-
-.footer a {
-  color: var(--primary);
-  text-decoration: none;
   position: relative;
+  z-index: 100;
 }
 
-.footer a::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--secondary);
-  transition: width 0.3s ease;
+.neon-text {
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green),
+    0 0 30px var(--neon-green);
 }
 
-.footer a:hover::after {
-  width: 100%;
-}
-
-/* Animations */
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.delay-1 {
-  animation-delay: 0.2s;
-}
-.delay-2 {
-  animation-delay: 0.4s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.particle {
-  position: absolute;
-  background: rgba(76, 175, 80, 0.1);
+.crystal-ball {
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  animation: float linear infinite;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(76, 175, 80, 0.2),
+    rgba(76, 175, 80, 0.05)
+  );
+  position: relative;
+  margin: 2rem auto;
+  animation: float 3s ease-in-out infinite;
+}
+
+.inner-glow {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 50px var(--neon-green);
+  padding: 20px;
+}
+
+.skin-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px var(--neon-green));
+  transition: transform 0.5s;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.glow-btn {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--neon-green);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: "Minecraft";
+  text-transform: uppercase;
+}
+
+.glow-btn:hover {
+  background: var(--neon-green);
+  box-shadow: 0 0 20px var(--neon-green);
+  transform: translateY(-3px);
 }
 
 @keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Particle animation */
+.particle {
+  position: absolute;
+  background: var(--particle-color);
+  border-radius: 50%;
+  animation: particle-float linear infinite;
+}
+
+@keyframes particle-float {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(100vh);
     opacity: 0;
   }
-  10% {
-    opacity: 1;
-  }
-  90% {
+  50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(-100vh) rotate(360deg);
+    transform: translateY(-100vh);
     opacity: 0;
+  }
+}
+
+.kieran-name {
+  color: var(--neon-purple);
+  text-shadow: 0 0 10px var(--neon-purple);
+  animation: name-glow 2s infinite alternate;
+}
+
+@keyframes name-glow {
+  from {
+    text-shadow: 0 0 5px var(--neon-purple);
+  }
+  to {
+    text-shadow: 0 0 20px var(--neon-purple);
   }
 }
