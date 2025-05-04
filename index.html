@@ -1,168 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Minecraft Skin Viewer</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background-color: #f5f5f5;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    input {
-      padding: 10px;
-      font-size: 16px;
-      width: 250px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      margin-left: 10px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #skin-container {
-      margin: 20px auto;
-      max-width: 512px;
-    }
-    .download-btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 10px 20px;
-      background-color: #2196F3;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .download-btn:hover {
-      background-color: #0b7dda;
-    }
-    .model-toggle {
-      margin: 10px;
-      padding: 10px 20px;
-      background-color: #FF9800;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .model-toggle:hover {
-      background-color: #e68a00;
-    }
-    .error {
-      color: #d32f2f;
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #ffebee;
-      border-radius: 4px;
-    }
-    .loading {
-      color: #1976D2;
-      margin-top: 20px;
-    }
-    .skin-info {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #e8f5e9;
-      border-radius: 4px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Minecraft Skin Viewer</h1>
-    <input id="username" placeholder="Enter Minecraft Username" value="Notch" />
-    <button onclick="getSkin()">View Skin</button>
-    <div id="output"></div>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Skin Viewer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://raw.githubusercontent.com/yourusername/yourrepo/main/favicon.png"
+    />
+  </head>
+  <body>
+    <div class="particles" id="particles"></div>
 
-  <script>
-    async function getSkin() {
-      const username = document.getElementById('username').value.trim();
-      const output = document.getElementById('output');
-      output.innerHTML = "<p class='loading'>Loading...</p>";
+    <header class="header">
+      <h1 class="logo fade-in">Skin Viewer</h1>
+      <div class="search-container fade-in delay-1">
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter Minecraft Username"
+        />
+        <button onclick="getSkin()">View Skin</button>
+      </div>
+    </header>
 
-      if (!username) {
-        output.innerHTML = "<p class='error'>Please enter a username.</p>";
-        return;
-      }
-
-      try {
-        // Use Netlify Function to get UUID
-        const response = await fetch(`/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`);
-        
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "Username not found");
-        }
-        
-        const data = await response.json();
-        const uuid = data.id;
-        const displayName = data.name || username;
-
-        displaySkin(uuid, displayName);
-      } catch (e) {
-        output.innerHTML = `<p class='error'>Error: ${e.message}. Make sure the username is correct.</p>`;
-        console.error(e);
-      }
-    }
-
-    function displaySkin(uuid, username) {
-      const output = document.getElementById('output');
-      output.innerHTML = `
-        <h2>${username}'s Skin</h2>
-        <button class="model-toggle" onclick="toggleModel('${uuid}', '${username}')">Toggle Model (Classic/Slim)</button>
-        <div id="skin-container">
-          <img src="https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay" alt="Skin" />
+    <main class="main-content">
+      <div class="skin-container" id="output">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Enter a username to view skin</p>
         </div>
-        <div>
-          <a href="https://crafatar.com/skins/${uuid}" class="download-btn" download="${username}-skin.png">Download Skin</a>
-          <a href="https://crafatar.com/avatars/${uuid}?size=128" class="download-btn" download="${username}-avatar.png">Download Avatar</a>
-        </div>
-        <div class="skin-info">
-          <p>Username: ${username}</p>
-          <p>UUID: ${uuid}</p>
-        </div>
-      `;
-    }
+      </div>
+    </main>
 
-    function toggleModel(uuid, username) {
-      const skinContainer = document.getElementById('skin-container');
-      const currentImg = skinContainer.querySelector('img');
-      const currentSrc = currentImg.src;
-      
-      if (currentSrc.includes('&model=classic')) {
-        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=slim`;
-      } else if (currentSrc.includes('&model=slim')) {
-        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=classic`;
-      } else {
-        currentImg.src = `https://crafatar.com/renders/body/${uuid}?size=512&default=MHF_Steve&overlay&model=slim`;
-      }
-    }
+    <footer class="footer fade-in delay-2">
+      <p>
+        Created by
+        <a href="https://github.com/yourusername" target="_blank">Your Name</a>
+      </p>
+    </footer>
 
-    // Load default skin on page load
-    window.onload = function() {
-      getSkin();
-    };
-  </script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
