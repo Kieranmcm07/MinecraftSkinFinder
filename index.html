@@ -96,9 +96,6 @@
   </div>
 
   <script>
-    // Use a serverless function as a proxy to avoid CORS issues
-    const PROXY_URL = 'https://minecraft-skin-proxy.vercel.app/api';
-    
     async function getSkin() {
       const username = document.getElementById('username').value.trim();
       const output = document.getElementById('output');
@@ -110,16 +107,17 @@
       }
 
       try {
-        // Try to get UUID through our proxy
-        const uuidResponse = await fetch(`${PROXY_URL}/uuid?username=${encodeURIComponent(username)}`);
+        // Use Netlify Function to get UUID
+        const response = await fetch(`/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`);
         
-        if (!uuidResponse.ok) {
-          throw new Error("Username not found");
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Username not found");
         }
         
-        const uuidData = await uuidResponse.json();
-        const uuid = uuidData.id;
-        const displayName = uuidData.name || username;
+        const data = await response.json();
+        const uuid = data.id;
+        const displayName = data.name || username;
 
         displaySkin(uuid, displayName);
       } catch (e) {
