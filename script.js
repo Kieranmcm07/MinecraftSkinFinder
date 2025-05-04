@@ -29,7 +29,10 @@ async function loadSkin() {
 }
 
 function toggleModel() {
-  if (!currentUUID) return;
+  if (!currentUUID) {
+    alert("Please load a skin first!");
+    return;
+  }
   currentModel = currentModel === "classic" ? "slim" : "classic";
   document.getElementById(
     "skin-image"
@@ -37,14 +40,10 @@ function toggleModel() {
 }
 
 function showErrorState() {
-  const skinContainer = document.getElementById("skin-container");
-  const errorBox = document.getElementById("error-message");
   const skinImg = document.getElementById("skin-image");
+  const errorBox = document.getElementById("error-message");
 
-  skinImg.src = "https://i.imgur.com/9E8ZzJG.png"; // 404 image
+  skinImg.src = "https://i.imgur.com/9E8ZzJG.png";
   errorBox.classList.remove("hidden");
   document.getElementById("download-link").classList.add("hidden");
 }
-
-// Initial load with error state
-window.onload = showErrorState;
