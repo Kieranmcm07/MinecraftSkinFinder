@@ -60,11 +60,29 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   image-rendering: pixelated;
+  position: relative;
+  overflow: hidden;
 }
 
 .minecraft-btn:hover {
   background: #6b8c4d;
   transform: translateY(-2px);
+}
+
+.minecraft-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 80%
+  );
+  animation: btnShine 3s infinite;
 }
 
 .skin-viewer {
@@ -81,6 +99,7 @@ body {
   border: 4px solid var(--mc-border);
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
+  transition: all 0.3s ease;
 }
 
 .error-box {
@@ -92,6 +111,7 @@ body {
   padding: 2rem;
   text-align: center;
   border: 4px solid #ff4444;
+  animation: errorPulse 0.5s ease-out;
 }
 
 .error-box .signature {
@@ -104,6 +124,11 @@ body {
   padding: 1.5rem;
   border: 4px solid var(--mc-border);
   margin-bottom: 1rem;
+}
+
+.info-box h3 {
+  font-weight: normal;
+  text-shadow: 1px 1px #000;
 }
 
 .action-buttons {
@@ -124,4 +149,70 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+.github-link {
+  color: var(--mc-green);
+  text-decoration: none;
+  text-shadow: 1px 1px #000;
+  transition: all 0.2s;
+}
+
+.github-link:hover {
+  color: #6b8c4d;
+  text-decoration: underline;
+}
+
+@keyframes btnShine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+@keyframes skinLoad {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes errorPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.skin-loaded {
+  animation: skinLoad 0.5s ease-out;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
