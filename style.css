@@ -3,82 +3,8 @@
   --mc-dark: #2d2d2d;
   --mc-border: #4a4a4a;
   --mc-text: #ffffff;
-  --glow-color: rgba(91, 124, 61, 0.4);
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 10px var(--glow-color);
-  }
-  50% {
-    box-shadow: 0 0 20px var(--glow-color);
-  }
-  100% {
-    box-shadow: 0 0 10px var(--glow-color);
-  }
-}
-
-@keyframes pop-in {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  80% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
-  }
-}
-
-@keyframes pixelate {
-  0% {
-    image-rendering: crisp-edges;
-  }
-  50% {
-    image-rendering: pixelated;
-  }
-  100% {
-    image-rendering: crisp-edges;
-  }
-}
-
-/* Rest of your existing CSS */
 body {
   background: #1a1a1a;
   font-family: "Minecraft", sans-serif;
@@ -91,74 +17,111 @@ body {
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  position: relative;
 }
 
-.scanlines {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(0, 0, 0, 0.05) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 999;
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.pulse {
-  animation: pulse 2s infinite;
+.title {
+  color: var(--mc-green);
+  text-shadow: 2px 2px #000;
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  letter-spacing: 2px;
 }
 
-.hover-glow:hover {
-  animation: glow 1s infinite;
-  filter: brightness(1.1);
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 1rem 0;
 }
 
-.pop-in {
-  animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.pixel-box {
-  position: relative;
-  border: 4px solid var(--mc-border);
+.minecraft-input {
+  padding: 12px;
+  border: 3px solid var(--mc-border);
   background: var(--mc-dark);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: var(--mc-text);
+  font-family: "Minecraft";
+  font-size: 1.1rem;
+  width: 300px;
+  image-rendering: pixelated;
 }
 
-/* ... keep all your existing CSS rules ... */
-
-.shake {
-  animation: shake 0.15s linear 3;
-}
-
-.pixelate {
-  animation: pixelate 0.3s ease-out;
-}
-
-.loading-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 4px;
+.minecraft-btn {
+  padding: 12px 24px;
   background: var(--mc-green);
-  transition: width 0.3s ease;
-  z-index: 100;
+  border: 3px solid var(--mc-border);
+  color: white;
+  font-family: "Minecraft";
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  image-rendering: pixelated;
 }
 
-.skin-image.loading {
-  background: linear-gradient(
-    45deg,
-    #1a1a1a 25%,
-    #2a2a2a 25%,
-    #2a2a2a 50%,
-    #1a1a1a 50%,
-    #1a1a1a 75%,
-    #2a2a2a 75%
-  );
-  background-size: 40px 40px;
-  animation: shimmer 2s linear infinite;
+.minecraft-btn:hover {
+  background: #6b8c4d;
+  transform: translateY(-2px);
+}
+
+.skin-viewer {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+.skin-image {
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 4px solid var(--mc-border);
+  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
+    4px;
+}
+
+.error-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--mc-dark);
+  padding: 2rem;
+  text-align: center;
+  border: 4px solid #ff4444;
+}
+
+.error-box .signature {
+  color: var(--mc-green);
+  margin-top: 1rem;
+}
+
+.info-box {
+  background: var(--mc-dark);
+  padding: 1.5rem;
+  border: 4px solid var(--mc-border);
+  margin-bottom: 1rem;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.download-btn {
+  background: #3d7c7c;
+  text-decoration: none;
+  text-align: center;
+}
+
+.model-btn {
+  background: #7c3d3d;
+}
+
+.hidden {
+  display: none !important;
 }
