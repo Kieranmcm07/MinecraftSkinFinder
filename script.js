@@ -17,35 +17,45 @@ async function loadSkin() {
 
   try {
     const skinImg = document.getElementById("skin-image");
-    skinImg.style.animation = "none";
-    void skinImg.offsetWidth; // Trigger reflow
-    skinImg.style.animation =
-      "skinIntro 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+    const downloadLink = document.getElementById("download-link");
+
+    // Reset states
+    skinImg.classList.add("loading");
+    downloadLink.classList.add("hidden");
+    skinImg.style.transform = "scale(0.95) rotateZ(-5deg)";
 
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || "Player not found");
+      skinImg.classList.remove("loading");
+      throw new Error("Player not found");
     }
 
     const data = await response.json();
     currentUUID = data.id;
 
-    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&${Date.now()}`;
-    skinImg.onload = () => (skinImg.style.transform = "rotateZ(0) scale(1)");
+    // Load new skin with cache busting
+    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&t=${Date.now()}`;
 
-    const downloadLink = document.getElementById("download-link");
-    downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
-    downloadLink.download = `${username}_skin.png`;
-    downloadLink.classList.remove("hidden");
+    skinImg.onload = () => {
+      skinImg.classList.remove("loading");
+      downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
+      downloadLink.download = `${username}_skin.png`;
+      downloadLink.classList.remove("hidden");
+    };
+
+    skinImg.onerror = () => {
+      showErrorState("Failed to load skin image");
+      downloadLink.classList.add("hidden");
+    };
 
     updateHistory(username);
     hideErrorState();
   } catch (error) {
     showErrorState(error.message);
+    skinImg.classList.remove("loading");
   }
 }
 
@@ -97,15 +107,11 @@ function toggleAbout() {
 document
   .getElementById("download-link")
   .addEventListener("click", function (e) {
-    e.preventDefault();
-    const link = document.createElement("a");
-    link.href = this.href;
-    link.download = `${document
-      .getElementById("username")
-      .value.trim()}_skin.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (!currentUUID) {
+      e.preventDefault();
+      showErrorState("No skin loaded to download!");
+      return;
+    }
   });
 
 // Initial setup

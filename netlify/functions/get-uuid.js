@@ -15,7 +15,6 @@ exports.handler = async (event, context) => {
       )}`
     );
 
-    // Handle 204 (No Content) and 404 cases
     if (response.status === 204 || response.status >= 400) {
       return {
         statusCode: 404,
