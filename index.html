@@ -29,18 +29,21 @@
 
       <main class="skin-viewer">
         <div id="skin-container">
+          <div class="model-indicator" id="model-indicator">
+            Current Model: Classic
+          </div>
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
             id="skin-image"
             class="skin-image"
             alt="Minecraft Skin"
-            onerror="showErrorState()"
+            onerror="showErrorState('Failed to load skin')"
           />
           <div id="error-message" class="error-box hidden">
             <div class="error-icon">⚠️</div>
-            <h2>SKIN NOT FOUND</h2>
-            <p>The image you're trying to request does not exist</p>
-            <p class="signature">- Kieran's Skin Viewer -</p>
+            <h2>ERROR</h2>
+            <p>Error message here</p>
+            <p class="signature">- Skin Viewer -</p>
           </div>
         </div>
 
@@ -55,9 +58,13 @@
                 >Kieran</a
               >
             </h3>
-            <p>🔍 Search any Minecraft username</p>
-            <p>🔄 Toggle between 3D views</p>
-            <p>⏬ Download HD skin files</p>
+            <div class="info-panel">
+              <h4>ℹ️ How to Use</h4>
+              <p>1. Enter any Minecraft username</p>
+              <p>2. Click VIEW SKIN to load</p>
+              <p>3. Toggle between Classic/Slim models</p>
+              <p>4. Download HD skin file</p>
+            </div>
           </div>
           <div class="action-buttons">
             <button onclick="toggleModel()" class="minecraft-btn model-btn">
