@@ -35,12 +35,21 @@
       const output = document.getElementById('output');
       output.innerHTML = "Loading...";
 
+      if (!username) {
+        output.innerHTML = "<p style='color: red;'>Please enter a username.</p>";
+        return;
+      }
+
       try {
-        const res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${username}`);
+        // Use a CORS proxy to avoid CORS errors
+        const res = await fetch(`https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${username}`);
+        
         if (!res.ok) throw new Error("Username not found.");
+        
         const data = await res.json();
         const uuid = data.id;
 
+        // Show the skin and avatar
         output.innerHTML = `
           <h2>${username}'s Skin</h2>
           <img src="https://crafatar.com/renders/body/${uuid}?size=512" alt="Skin" />
