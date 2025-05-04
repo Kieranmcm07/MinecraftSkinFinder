@@ -9,12 +9,6 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/4EeQp3P.png" />
   </head>
   <body>
-    <div class="animated-bg">
-      <div class="pixel-particle"></div>
-      <div class="pixel-particle"></div>
-      <div class="pixel-particle"></div>
-    </div>
-
     <div class="container">
       <header class="header">
         <h1 class="title">MINECRAFT SKIN VIEWER</h1>
@@ -23,24 +17,14 @@
             type="text"
             id="username"
             placeholder="Enter username..."
-            class="minecraft-input hover-glow"
+            class="minecraft-input"
           />
-          <button onclick="loadSkin()" class="minecraft-btn hover-glow">
-            <span class="btn-shine"></span>
-            VIEW SKIN
-          </button>
-          <button onclick="randomSkin()" class="minecraft-btn hover-glow">
-            <span class="btn-shine"></span>
-            RANDOM
-          </button>
+          <button onclick="loadSkin()" class="minecraft-btn">VIEW SKIN</button>
         </div>
       </header>
 
       <main class="skin-viewer">
         <div id="skin-container">
-          <div class="model-indicator" id="model-indicator">
-            Current Model: Classic
-          </div>
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
             id="skin-image"
@@ -56,37 +40,26 @@
         </div>
 
         <div class="skin-info">
-          <div class="info-box pixel-box">
+          <div class="info-box">
             <h3>
               🛠️ Created by
               <a
                 href="https://github.com/KieranMc"
                 target="_blank"
                 class="github-link"
-                >Kieran</a
+                >GitHub/KieranMc</a
               >
             </h3>
-            <div class="info-panel">
-              <h4>ℹ️ How to Use</h4>
-              <p>1. Enter any Minecraft username</p>
-              <p>2. Click VIEW SKIN to load</p>
-              <p>3. Toggle between Classic/Slim</p>
-              <p>4. Download HD skin file</p>
-            </div>
+            <div class="skin-history" id="skin-history"></div>
+            <p>🔍 Search any Minecraft username</p>
+            <p>🔄 Toggle between 3D views</p>
+            <p>⏬ Download HD skin files</p>
           </div>
           <div class="action-buttons">
-            <button
-              onclick="toggleModel()"
-              class="minecraft-btn model-btn hover-glow"
-            >
-              <span class="btn-shine"></span>
+            <button onclick="toggleModel()" class="minecraft-btn model-btn">
               TOGGLE MODEL
             </button>
-            <a
-              id="download-link"
-              class="minecraft-btn download-btn hidden hover-glow"
-            >
-              <span class="btn-shine"></span>
+            <a id="download-link" class="minecraft-btn download-btn hidden">
               DOWNLOAD SKIN
             </a>
           </div>
