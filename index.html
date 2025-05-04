@@ -19,7 +19,17 @@
             placeholder="Enter username..."
             class="minecraft-input"
           />
-          <button onclick="loadSkin()" class="minecraft-btn">VIEW SKIN</button>
+          <button onclick="loadSkin()" class="minecraft-btn hover-glow">
+            <span class="btn-shine"></span>
+            VIEW SKIN
+          </button>
+          <button
+            onclick="randomSkin()"
+            class="minecraft-btn random-btn hover-glow"
+          >
+            <span class="btn-shine"></span>
+            RANDOM
+          </button>
         </div>
       </header>
 
@@ -47,24 +57,36 @@
                 href="https://github.com/KieranMc"
                 target="_blank"
                 class="github-link"
-                >GitHub/KieranMc</a
+                >KieranMc</a
               >
             </h3>
-            <div class="skin-history" id="skin-history"></div>
             <p>🔍 Search any Minecraft username</p>
             <p>🔄 Toggle between 3D views</p>
             <p>⏬ Download HD skin files</p>
           </div>
           <div class="action-buttons">
-            <button onclick="toggleModel()" class="minecraft-btn model-btn">
+            <button
+              onclick="toggleModel()"
+              class="minecraft-btn model-btn hover-glow"
+            >
+              <span class="btn-shine"></span>
               TOGGLE MODEL
             </button>
-            <a id="download-link" class="minecraft-btn download-btn hidden">
+            <a
+              id="download-link"
+              class="minecraft-btn download-btn hidden hover-glow"
+            >
+              <span class="btn-shine"></span>
               DOWNLOAD SKIN
             </a>
           </div>
         </div>
       </main>
+    </div>
+
+    <div class="skin-history-container pixel-box">
+      <h4>🔍 Recent Searches</h4>
+      <div id="skin-history"></div>
     </div>
 
     <script src="script.js"></script>
