@@ -2,15 +2,6 @@ let currentUUID = null;
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
 const popularPlayers = ["Notch", "Dream", "Technoblade", "Skeppy", "DanTDM"];
 
-// Create particles
-for (let i = 0; i < 50; i++) {
-  const particle = document.createElement("div");
-  particle.className = "particle";
-  particle.style.left = Math.random() * 100 + "vw";
-  particle.style.animationDelay = Math.random() * 5 + "s";
-  document.body.appendChild(particle);
-}
-
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
   if (!username) return showErrorState("Please enter a username!");
@@ -31,7 +22,7 @@ async function loadSkin() {
 
     skinImg.onload = () => {
       skinImg.style.opacity = 1;
-      document.getElementById("error-message").classList.add("hidden");
+      hideErrorState();
       updateHistory(username);
     };
 
@@ -41,11 +32,6 @@ async function loadSkin() {
   } catch (error) {
     showErrorState(error.message);
   }
-}
-
-function toggle3DView() {
-  const skinContainer = document.getElementById("skin-container");
-  skinContainer.classList.toggle("viewer-3d-active");
 }
 
 function randomSkin() {
@@ -81,13 +67,13 @@ function renderHistory() {
 function showErrorState(message) {
   const errorBox = document.getElementById("error-message");
   errorBox.querySelector("p").textContent = message;
-  errorBox.style.opacity = "1";
-  errorBox.classList.remove("hidden");
+  errorBox.classList.add("visible");
+  setTimeout(hideErrorState, 3000);
+}
 
-  setTimeout(() => {
-    errorBox.style.opacity = "0";
-    setTimeout(() => errorBox.classList.add("hidden"), 300);
-  }, 3000);
+function hideErrorState() {
+  const errorBox = document.getElementById("error-message");
+  errorBox.classList.remove("visible");
 }
 
 document

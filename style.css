@@ -3,8 +3,7 @@
   --mc-dark: #2d2d2d;
   --mc-border: #4a4a4a;
   --mc-text: #ffffff;
-  --purple-accent: #6e5494;
-  --blue-accent: #4078c0;
+  --purple-accent: #7c3d5b;
 }
 
 body {
@@ -14,13 +13,11 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 20px;
-  overflow-x: hidden;
 }
 
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  position: relative;
 }
 
 .header {
@@ -34,17 +31,6 @@ body {
   font-size: 2.5rem;
   margin: 1rem 0;
   letter-spacing: 2px;
-  animation: titleFloat 3s ease-in-out infinite;
-}
-
-@keyframes titleFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
 }
 
 .search-box {
@@ -80,15 +66,39 @@ body {
 }
 
 .minecraft-btn:hover {
-  background: #6b8c4d;
   transform: translateY(-2px);
+}
+
+/* Button Shine Effect */
+.minecraft-btn::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 80%
+  );
+  animation: btnShine 3s infinite;
+}
+
+@keyframes btnShine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
 }
 
 .skin-viewer {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 2rem;
-  margin-top: 2rem;
 }
 
 .skin-image {
@@ -99,17 +109,17 @@ body {
   border: 4px solid var(--mc-border);
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
-  animation: skinIntro 0.8s ease-out;
+  animation: skinLoad 0.5s ease-out;
 }
 
-@keyframes skinIntro {
+@keyframes skinLoad {
   0% {
-    transform: scale(0.9) rotateZ(-2deg);
     opacity: 0;
+    transform: scale(0.95);
   }
   100% {
-    transform: scale(1) rotateZ(0);
     opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -123,7 +133,12 @@ body {
   text-align: center;
   border: 4px solid #ff4444;
   z-index: 100;
+  opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.error-box.visible {
+  opacity: 1;
 }
 
 .info-box {
@@ -143,37 +158,39 @@ body {
   background: #3d7c7c;
   text-decoration: none;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* ===== New Improvements ===== */
+.random-btn {
+  background: var(--purple-accent) !important;
+}
+
+/* GitHub Link Styling */
 .github-link {
-  display: inline-block;
-  background: linear-gradient(45deg, var(--purple-accent), var(--blue-accent));
+  color: #6e5494;
+  background: linear-gradient(45deg, #6e5494, #4078c0);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
   padding: 2px 6px;
-  animation: nameJump 0.8s ease infinite;
+  border-radius: 4px;
+  transition: all 0.3s;
+  text-decoration: none;
+  animation: nameBounce 0.8s ease infinite;
 }
 
-@keyframes nameJump {
+@keyframes nameBounce {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 }
 
 .skin-history-container {
   position: fixed;
   left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 120px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
@@ -191,49 +208,9 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 4px;
-  font-size: 1rem;
 }
 
 .skin-history-item:hover {
   background: var(--mc-green);
-  transform: translateX(10px);
-}
-
-.particle {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  background: var(--mc-green);
-  pointer-events: none;
-  animation: particleFloat 8s linear infinite;
-  z-index: -1;
-}
-
-@keyframes particleFloat {
-  from {
-    transform: translateY(110vh) rotate(0deg);
-  }
-  to {
-    transform: translateY(-10vh) rotate(360deg);
-  }
-}
-
-.viewer-3d-active {
-  transform: perspective(1000px) rotateY(15deg) rotateX(10deg) !important;
-  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.info-panel {
-  padding: 1rem;
-  background: var(--mc-dark);
-  border: 2px solid var(--mc-border);
-  margin-top: 1rem;
-  border-radius: 6px;
-}
-
-.info-panel p {
-  margin: 12px 0;
-  padding: 8px;
-  background: #2d2d2d;
-  border-radius: 4px;
+  transform: translateX(5px);
 }

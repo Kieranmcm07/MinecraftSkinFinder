@@ -23,7 +23,10 @@
             <span class="btn-shine"></span>
             VIEW SKIN
           </button>
-          <button onclick="randomSkin()" class="minecraft-btn hover-glow">
+          <button
+            onclick="randomSkin()"
+            class="minecraft-btn random-btn hover-glow"
+          >
             <span class="btn-shine"></span>
             🎲 RANDOM
           </button>
@@ -38,7 +41,7 @@
             class="skin-image"
             alt="Minecraft Skin"
           />
-          <div id="error-message" class="error-box hidden">
+          <div id="error-message" class="error-box">
             <div class="error-icon">⚠️</div>
             <h2>ERROR</h2>
             <p>Error message here</p>
@@ -57,17 +60,10 @@
                 >GitHub/KieranMc</a
               >
             </h3>
-            <div class="info-panel">
-              <p>🔍 Search any Minecraft username</p>
-              <p>🎮 Toggle 3D Perspective</p>
-              <p>⏬ Download HD skin files</p>
-            </div>
+            <p>🔍 Search any Minecraft username</p>
+            <p>⏬ Download HD skin files</p>
           </div>
           <div class="action-buttons">
-            <button onclick="toggle3DView()" class="minecraft-btn hover-glow">
-              <span class="btn-shine"></span>
-              🕶️ 3D VIEW
-            </button>
             <a
               id="download-link"
               class="minecraft-btn download-btn hidden hover-glow"
