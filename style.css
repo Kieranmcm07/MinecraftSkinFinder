@@ -124,29 +124,29 @@ body {
   border: 4px solid var(--mc-border);
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease-out;
 }
 
-.skin-image.loading {
-  animation: skinIntro 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+.skin-image.loaded {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .skin-image:hover {
-  transform: rotateZ(3deg) scale(1.03) translateY(-5px);
+  transform: rotateZ(2deg) scale(1.02) translateY(-3px);
   cursor: pointer;
 }
 
-@keyframes skinIntro {
-  0% {
-    transform: scale(0.8) rotateZ(-8deg) translateY(20px);
-    filter: blur(8px);
+@keyframes fadeIn {
+  from {
     opacity: 0;
+    transform: translateY(20px);
   }
-  100% {
-    transform: scale(1) rotateZ(0) translateY(0);
-    filter: blur(0);
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -218,9 +218,9 @@ body {
 }
 
 .skin-history-container {
-  position: fixed !important;
-  left: 30px !important;
-  top: 150px !important;
+  position: fixed;
+  left: 30px;
+  top: 200px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;

@@ -20,42 +20,33 @@ async function loadSkin() {
     const downloadLink = document.getElementById("download-link");
 
     // Reset states
-    skinImg.classList.add("loading");
+    skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
-    skinImg.style.transform = "scale(0.95) rotateZ(-5deg)";
 
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
 
-    if (!response.ok) {
-      skinImg.classList.remove("loading");
-      throw new Error("Player not found");
-    }
+    if (!response.ok) throw new Error("Player not found");
 
     const data = await response.json();
     currentUUID = data.id;
 
-    // Load new skin with cache busting
+    // Load new skin with fade animation
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&t=${Date.now()}`;
 
     skinImg.onload = () => {
-      skinImg.classList.remove("loading");
+      skinImg.classList.add("loaded");
       downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
       downloadLink.download = `${username}_skin.png`;
       downloadLink.classList.remove("hidden");
-    };
-
-    skinImg.onerror = () => {
-      showErrorState("Failed to load skin image");
-      downloadLink.classList.add("hidden");
     };
 
     updateHistory(username);
     hideErrorState();
   } catch (error) {
     showErrorState(error.message);
-    skinImg.classList.remove("loading");
+    skinImg.classList.remove("loaded");
   }
 }
 
