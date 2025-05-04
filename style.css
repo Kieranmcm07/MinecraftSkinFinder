@@ -43,7 +43,7 @@ body {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
@@ -88,6 +88,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 2rem;
+  margin-top: 2rem;
 }
 
 .skin-image {
@@ -98,16 +99,16 @@ body {
   border: 4px solid var(--mc-border);
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
-  animation: skinLoad 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: skinIntro 0.8s ease-out;
 }
 
-@keyframes skinLoad {
+@keyframes skinIntro {
   0% {
-    transform: scale(0.95);
+    transform: scale(0.9) rotateZ(-2deg);
     opacity: 0;
   }
   100% {
-    transform: scale(1);
+    transform: scale(1) rotateZ(0);
     opacity: 1;
   }
 }
@@ -122,18 +123,7 @@ body {
   text-align: center;
   border: 4px solid #ff4444;
   z-index: 100;
-  animation: errorPulse 0.5s ease-out;
-}
-
-@keyframes errorPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
+  transition: opacity 0.3s ease;
 }
 
 .info-box {
@@ -158,51 +148,55 @@ body {
   justify-content: center;
 }
 
-.model-btn {
-  background: #7c3d3d;
-}
-
-.hidden {
-  display: none !important;
-}
-
 /* ===== New Improvements ===== */
 .github-link {
+  display: inline-block;
   background: linear-gradient(45deg, var(--purple-accent), var(--blue-accent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   padding: 2px 6px;
-  border-radius: 4px;
-  animation: nameBounce 1s ease infinite;
-  text-decoration: none;
+  animation: nameJump 0.8s ease infinite;
 }
 
-@keyframes nameBounce {
+@keyframes nameJump {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
   }
-}
-
-.random-btn {
-  background: #5b3d7c !important;
 }
 
 .skin-history-container {
   position: fixed;
-  right: 20px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
-  width: 200px;
+  width: 220px;
   max-height: 60vh;
   overflow-y: auto;
+  border-radius: 8px;
+}
+
+.skin-history-item {
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--mc-dark);
+  border: 2px solid var(--mc-border);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.skin-history-item:hover {
+  background: var(--mc-green);
+  transform: translateX(10px);
 }
 
 .particle {
@@ -224,26 +218,22 @@ body {
   }
 }
 
-.btn-shine {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.2) 50%,
-    transparent 80%
-  );
-  animation: btnShine 2.5s infinite;
+.viewer-3d-active {
+  transform: perspective(1000px) rotateY(15deg) rotateX(10deg) !important;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-@keyframes btnShine {
-  0% {
-    transform: translateX(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) rotate(45deg);
-  }
+.info-panel {
+  padding: 1rem;
+  background: var(--mc-dark);
+  border: 2px solid var(--mc-border);
+  margin-top: 1rem;
+  border-radius: 6px;
+}
+
+.info-panel p {
+  margin: 12px 0;
+  padding: 8px;
+  background: #2d2d2d;
+  border-radius: 4px;
 }

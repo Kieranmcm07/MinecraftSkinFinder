@@ -1,18 +1,8 @@
 let currentUUID = null;
-let currentModel = "classic";
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
-const popularPlayers = [
-  "Notch",
-  "Dream",
-  "Technoblade",
-  "Skeppy",
-  "DanTDM",
-  "StampyCat",
-  "CaptainSparklez",
-  "Aphmau",
-];
+const popularPlayers = ["Notch", "Dream", "Technoblade", "Skeppy", "DanTDM"];
 
-// Particle background
+// Create particles
 for (let i = 0; i < 50; i++) {
   const particle = document.createElement("div");
   particle.className = "particle";
@@ -37,7 +27,7 @@ async function loadSkin() {
     const skinImg = document.getElementById("skin-image");
     skinImg.style.opacity = 0;
 
-    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
+    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay`;
 
     skinImg.onload = () => {
       skinImg.style.opacity = 1;
@@ -53,18 +43,9 @@ async function loadSkin() {
   }
 }
 
-function toggleModel() {
-  if (!currentUUID) {
-    showErrorState("Load a skin first!");
-    return;
-  }
-  currentModel = currentModel === "classic" ? "slim" : "classic";
-  const skinImg = document.getElementById("skin-image");
-  skinImg.style.opacity = 0;
-  setTimeout(() => {
-    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
-    skinImg.style.opacity = 1;
-  }, 300);
+function toggle3DView() {
+  const skinContainer = document.getElementById("skin-container");
+  skinContainer.classList.toggle("viewer-3d-active");
 }
 
 function randomSkin() {
@@ -88,8 +69,9 @@ function renderHistory() {
   historyContainer.innerHTML = skinHistory
     .map(
       (username) => `
-    <div class="skin-history-item" onclick="document.getElementById('username').value='${username}'; loadSkin()">
-      ${username}
+    <div class="skin-history-item" 
+         onclick="document.getElementById('username').value='${username}'; loadSkin()">
+      👤 ${username}
     </div>
   `
     )
@@ -99,8 +81,13 @@ function renderHistory() {
 function showErrorState(message) {
   const errorBox = document.getElementById("error-message");
   errorBox.querySelector("p").textContent = message;
+  errorBox.style.opacity = "1";
   errorBox.classList.remove("hidden");
-  setTimeout(() => errorBox.classList.add("hidden"), 5000);
+
+  setTimeout(() => {
+    errorBox.style.opacity = "0";
+    setTimeout(() => errorBox.classList.add("hidden"), 300);
+  }, 3000);
 }
 
 document
