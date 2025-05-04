@@ -25,15 +25,21 @@ async function loadSkin() {
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
-    if (!response.ok) throw new Error("Player not found");
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Player not found");
+    }
 
     const data = await response.json();
     currentUUID = data.id;
 
-    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay`;
+    skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&${Date.now()}`;
+    skinImg.onload = () => (skinImg.style.transform = "rotateZ(0) scale(1)");
 
     const downloadLink = document.getElementById("download-link");
     downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
+    downloadLink.download = `${username}_skin.png`;
     downloadLink.classList.remove("hidden");
 
     updateHistory(username);

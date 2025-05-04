@@ -10,10 +10,13 @@ exports.handler = async (event, context) => {
 
   try {
     const response = await fetch(
-      `https://api.mojang.com/users/profiles/minecraft/${username}`
+      `https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
+        username
+      )}`
     );
 
-    if (!response.ok) {
+    // Handle 204 (No Content) and 404 cases
+    if (response.status === 204 || response.status >= 400) {
       return {
         statusCode: 404,
         body: JSON.stringify({ error: "Username not found" }),

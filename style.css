@@ -125,6 +125,12 @@ body {
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
   animation: skinIntro 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: transform 0.3s ease;
+}
+
+.skin-image:hover {
+  transform: rotateZ(2deg) scale(1.02);
+  cursor: pointer;
 }
 
 @keyframes skinIntro {
@@ -186,6 +192,7 @@ body {
 }
 
 .github-link {
+  display: inline-block;
   background: linear-gradient(45deg, #6e5494, #4078c0);
   -webkit-background-clip: text;
   background-clip: text;
@@ -208,8 +215,8 @@ body {
 
 .skin-history-container {
   position: fixed;
-  left: 20px;
-  top: 200px;
+  left: 30px;
+  top: 150px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
@@ -218,12 +225,7 @@ body {
   overflow-y: auto;
   z-index: 50;
   border-radius: 8px;
-  transform: translateY(0);
-  transition: transform 0.3s ease;
-}
-
-.skin-history-container:hover {
-  transform: translateY(-5px);
+  will-change: transform;
 }
 
 .skin-history-item {
@@ -239,6 +241,35 @@ body {
 .skin-history-item:hover {
   background: var(--mc-green);
   transform: translateX(10px);
+}
+
+.about-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+}
+
+.about-section.expanded {
+  max-height: 500px;
+}
+
+.about-content {
+  padding: 1rem;
+  background: #2d2d2d;
+  border-radius: 6px;
+  border: 2px solid var(--mc-border);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.about-content h4 {
+  margin: 0.8rem 0;
+}
+
+.about-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
 }
 
 .particle {
@@ -258,22 +289,4 @@ body {
   to {
     transform: translateY(-30vh) rotate(360deg);
   }
-}
-
-.about-section {
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
-  margin-top: 1rem;
-}
-
-.about-section.expanded {
-  max-height: 500px;
-}
-
-.about-content {
-  padding: 1rem;
-  background: #2d2d2d;
-  border-radius: 6px;
-  border: 2px solid var(--mc-border);
 }
