@@ -2,11 +2,26 @@ let currentUUID = null;
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
 const popularPlayers = ["Notch", "Dream", "Technoblade", "Skeppy", "DanTDM"];
 
+// Create particles
+for (let i = 0; i < 50; i++) {
+  const particle = document.createElement("div");
+  particle.className = "particle";
+  particle.style.left = Math.random() * 100 + "vw";
+  particle.style.animationDelay = Math.random() * 5 + "s";
+  document.body.appendChild(particle);
+}
+
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
   if (!username) return showErrorState("Please enter a username!");
 
   try {
+    const skinImg = document.getElementById("skin-image");
+    skinImg.style.animation = "none";
+    void skinImg.offsetWidth; // Trigger reflow
+    skinImg.style.animation =
+      "skinIntro 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)";
+
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
@@ -15,20 +30,14 @@ async function loadSkin() {
     const data = await response.json();
     currentUUID = data.id;
 
-    const skinImg = document.getElementById("skin-image");
-    skinImg.style.opacity = 0;
-
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay`;
-
-    skinImg.onload = () => {
-      skinImg.style.opacity = 1;
-      hideErrorState();
-      updateHistory(username);
-    };
 
     const downloadLink = document.getElementById("download-link");
     downloadLink.href = `https://crafatar.com/skins/${currentUUID}`;
     downloadLink.classList.remove("hidden");
+
+    updateHistory(username);
+    hideErrorState();
   } catch (error) {
     showErrorState(error.message);
   }
@@ -72,8 +81,11 @@ function showErrorState(message) {
 }
 
 function hideErrorState() {
-  const errorBox = document.getElementById("error-message");
-  errorBox.classList.remove("visible");
+  document.getElementById("error-message").classList.remove("visible");
+}
+
+function toggleAbout() {
+  document.querySelector(".about-section").classList.toggle("expanded");
 }
 
 document
