@@ -8,20 +8,35 @@
       font-family: sans-serif;
       text-align: center;
       margin-top: 50px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     input {
-      padding: 8px;
+      padding: 10px;
       font-size: 16px;
       width: 250px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
     button {
-      padding: 8px 16px;
+      padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 4px;
+      margin-left: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
     }
     #skin-container {
       margin: 20px auto;
@@ -30,7 +45,7 @@
     .download-btn {
       display: inline-block;
       margin: 10px;
-      padding: 8px 16px;
+      padding: 10px 20px;
       background-color: #2196F3;
       color: white;
       border: none;
@@ -38,31 +53,52 @@
       cursor: pointer;
       text-decoration: none;
     }
+    .download-btn:hover {
+      background-color: #0b7dda;
+    }
     .model-toggle {
       margin: 10px;
-      padding: 8px 16px;
+      padding: 10px 20px;
       background-color: #FF9800;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
     }
+    .model-toggle:hover {
+      background-color: #e68a00;
+    }
     .error {
-      color: red;
+      color: #d32f2f;
       margin-top: 20px;
+      padding: 10px;
+      background-color: #ffebee;
+      border-radius: 4px;
     }
     .loading {
-      color: #2196F3;
+      color: #1976D2;
+      margin-top: 20px;
+    }
+    .skin-info {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <h1>Minecraft Skin Viewer</h1>
-  <input id="username" placeholder="Enter Minecraft Username" value="Notch" />
-  <button onclick="getSkin()">View Skin</button>
-  <div id="output"></div>
+  <div class="container">
+    <h1>Minecraft Skin Viewer</h1>
+    <input id="username" placeholder="Enter Minecraft Username" value="Notch" />
+    <button onclick="getSkin()">View Skin</button>
+    <div id="output"></div>
+  </div>
 
   <script>
+    // Use a serverless function as a proxy to avoid CORS issues
+    const PROXY_URL = 'https://minecraft-skin-proxy.vercel.app/api';
+    
     async function getSkin() {
       const username = document.getElementById('username').value.trim();
       const output = document.getElementById('output');
@@ -74,44 +110,21 @@
       }
 
       try {
-        // First try the direct Mojang API
-        let uuid = await getUUID(username);
+        // Try to get UUID through our proxy
+        const uuidResponse = await fetch(`${PROXY_URL}/uuid?username=${encodeURIComponent(username)}`);
         
-        if (!uuid) {
-          // If Mojang API fails, try via Craftar's UUID lookup
-          uuid = await getUUIDFromCrafatar(username);
-        }
-
-        if (!uuid) {
+        if (!uuidResponse.ok) {
           throw new Error("Username not found");
         }
+        
+        const uuidData = await uuidResponse.json();
+        const uuid = uuidData.id;
+        const displayName = uuidData.name || username;
 
-        displaySkin(uuid, username);
+        displaySkin(uuid, displayName);
       } catch (e) {
         output.innerHTML = `<p class='error'>Error: ${e.message}. Make sure the username is correct.</p>`;
         console.error(e);
-      }
-    }
-
-    async function getUUID(username) {
-      try {
-        const res = await fetch(`https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(username)}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.id;
-      } catch {
-        return null;
-      }
-    }
-
-    async function getUUIDFromCrafatar(username) {
-      try {
-        const res = await fetch(`https://crafatar.com/users/${encodeURIComponent(username)}`);
-        if (!res.ok) return null;
-        const data = await res.json();
-        return data.id;
-      } catch {
-        return null;
       }
     }
 
@@ -127,7 +140,10 @@
           <a href="https://crafatar.com/skins/${uuid}" class="download-btn" download="${username}-skin.png">Download Skin</a>
           <a href="https://crafatar.com/avatars/${uuid}?size=128" class="download-btn" download="${username}-avatar.png">Download Avatar</a>
         </div>
-        <p>UUID: ${uuid}</p>
+        <div class="skin-info">
+          <p>Username: ${username}</p>
+          <p>UUID: ${uuid}</p>
+        </div>
       `;
     }
 
