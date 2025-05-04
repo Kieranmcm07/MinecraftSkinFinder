@@ -11,6 +11,13 @@ for (let i = 0; i < 50; i++) {
   document.body.appendChild(particle);
 }
 
+// Debounce function to prevent spamming
+let debounceTimer;
+function debounce(func, delay) {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(func, delay);
+}
+
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
   if (!username) return showErrorState("Please enter a username!");
@@ -52,16 +59,18 @@ async function loadSkin() {
 }
 
 function randomSkin() {
-  const username =
-    popularPlayers[Math.floor(Math.random() * popularPlayers.length)];
-  document.getElementById("username").value = username;
-  loadSkin();
+  debounce(() => {
+    const username =
+      popularPlayers[Math.floor(Math.random() * popularPlayers.length)];
+    document.getElementById("username").value = username;
+    loadSkin();
+  }, 300); // 300ms debounce delay
 }
 
 function updateHistory(username) {
   if (!skinHistory.includes(username)) {
     skinHistory.unshift(username);
-    if (skinHistory.length > 5) skinHistory.pop();
+    if (skinHistory.length > 10) skinHistory.pop(); // Limit to 10 entries
     localStorage.setItem("skinHistory", JSON.stringify(skinHistory));
     renderHistory();
   }
