@@ -6,13 +6,15 @@
     <title>Minecraft Skin Viewer</title>
     <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://www.example.com/favicon.png"
-    />
+    <link rel="icon" type="image/png" href="https://i.imgur.com/4EeQp3P.png" />
   </head>
   <body>
+    <div class="animated-bg">
+      <div class="pixel-particle"></div>
+      <div class="pixel-particle"></div>
+      <div class="pixel-particle"></div>
+    </div>
+
     <div class="container">
       <header class="header">
         <h1 class="title">MINECRAFT SKIN VIEWER</h1>
@@ -21,9 +23,16 @@
             type="text"
             id="username"
             placeholder="Enter username..."
-            class="minecraft-input"
+            class="minecraft-input hover-glow"
           />
-          <button onclick="loadSkin()" class="minecraft-btn">VIEW SKIN</button>
+          <button onclick="loadSkin()" class="minecraft-btn hover-glow">
+            <span class="btn-shine"></span>
+            VIEW SKIN
+          </button>
+          <button onclick="randomSkin()" class="minecraft-btn hover-glow">
+            <span class="btn-shine"></span>
+            RANDOM
+          </button>
         </div>
       </header>
 
@@ -37,7 +46,6 @@
             id="skin-image"
             class="skin-image"
             alt="Minecraft Skin"
-            onerror="showErrorState('Failed to load skin')"
           />
           <div id="error-message" class="error-box hidden">
             <div class="error-icon">⚠️</div>
@@ -48,7 +56,7 @@
         </div>
 
         <div class="skin-info">
-          <div class="info-box">
+          <div class="info-box pixel-box">
             <h3>
               🛠️ Created by
               <a
@@ -62,17 +70,25 @@
               <h4>ℹ️ How to Use</h4>
               <p>1. Enter any Minecraft username</p>
               <p>2. Click VIEW SKIN to load</p>
-              <p>3. Toggle between Classic/Slim models</p>
+              <p>3. Toggle between Classic/Slim</p>
               <p>4. Download HD skin file</p>
             </div>
           </div>
           <div class="action-buttons">
-            <button onclick="toggleModel()" class="minecraft-btn model-btn">
+            <button
+              onclick="toggleModel()"
+              class="minecraft-btn model-btn hover-glow"
+            >
+              <span class="btn-shine"></span>
               TOGGLE MODEL
             </button>
-            <a id="download-link" class="minecraft-btn download-btn hidden"
-              >DOWNLOAD SKIN</a
+            <a
+              id="download-link"
+              class="minecraft-btn download-btn hidden hover-glow"
             >
+              <span class="btn-shine"></span>
+              DOWNLOAD SKIN
+            </a>
           </div>
         </div>
       </main>

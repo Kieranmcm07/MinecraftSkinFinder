@@ -20,12 +20,15 @@ async function loadSkin() {
     currentUUID = data.id;
 
     const skinImg = document.getElementById("skin-image");
+    skinImg.style.transform = "rotateX(360deg)";
+
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
 
     skinImg.onload = () => {
       skinContainer.removeChild(loader);
-      document.getElementById("error-message").classList.add("hidden");
+      skinImg.style.transform = "rotateX(0)";
       updateModelIndicator();
+      document.getElementById("error-message").classList.add("hidden");
     };
 
     const downloadLink = document.getElementById("download-link");
@@ -46,12 +49,19 @@ function toggleModel() {
   }
   currentModel = currentModel === "classic" ? "slim" : "classic";
   const skinImg = document.getElementById("skin-image");
-  skinImg.style.transform = "rotateY(90deg)";
+  skinImg.style.transform = "rotateY(180deg) scale(0.8)";
   setTimeout(() => {
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&model=${currentModel}`;
-    skinImg.style.transform = "rotateY(0deg)";
+    skinImg.style.transform = "rotateY(0) scale(1)";
     updateModelIndicator();
   }, 300);
+}
+
+function randomSkin() {
+  const users = ["Notch", "Dinnerbone", "Dream", "Technoblade", "Skeppy"];
+  document.getElementById("username").value =
+    users[Math.floor(Math.random() * users.length)];
+  loadSkin();
 }
 
 function updateModelIndicator() {
