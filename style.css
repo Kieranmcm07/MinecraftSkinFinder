@@ -106,18 +106,19 @@ body {
 .recent-searches-container {
   position: fixed; /* Keep it fixed on the page */
   bottom: 20px; /* Position it at the bottom */
-  right: 20px; /* Align it to the bottom-right corner to avoid collision */
+  right: 20px; /* Align it to the bottom-right corner */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
   width: 250px; /* Set a fixed width */
   z-index: 1000; /* Ensure it stays above other elements */
   box-shadow: 4px 4px 0 var(--mc-border);
+  transition: bottom 0.3s ease; /* Smooth transition for dynamic positioning */
 }
 
 /* Adjustments for "About This Site" Section */
 .about-section.expanded + .recent-searches-container {
-  bottom: 320px; /* Push the recent search box up when the "About" section is expanded */
+  bottom: 350px; /* Push the recent search box up when the "About" section is expanded */
 }
 
 /* Remove bullet points from Recent Searches */
