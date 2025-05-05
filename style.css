@@ -104,14 +104,14 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: fixed; /* Keeps it in place while scrolling */
-  bottom: 20px; /* Aligns with the "Created by KieranMc" box */
-  left: 10px; /* Moves it further to the left to avoid overlapping */
+  position: absolute; /* Allows it to stay in place relative to its parent container */
+  top: 20px; /* Aligns it with the top of the model box */
+  left: 10px; /* Positions it on the left side */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
-  width: 220px; /* Slightly reduced width to fit better */
-  z-index: 3; /* Lower z-index to avoid overlapping the skin viewer */
+  width: 205px;
+  z-index: 3; /* Ensures it doesn't overlap other elements */
 }
 
 /* Adjustments for "About This Site" Section */
