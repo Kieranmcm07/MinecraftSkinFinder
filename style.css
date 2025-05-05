@@ -104,14 +104,14 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: relative; /* Keeps it in place while scrolling */
+  position: fixed; /* Keeps it in place while scrolling */
   bottom: 20px; /* Aligns with the "Created by KieranMc" box */
   left: 20px; /* Positions it on the left side */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
   width: 250px;
-  z-index: 10; /* Lower z-index to avoid overlapping the model box */
+  z-index: 5; /* Ensure it doesn't overlap the model box */
 }
 
 /* Adjustments for "About This Site" Section */
