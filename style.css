@@ -104,14 +104,14 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: absolute; /* Allows it to stay in place relative to its parent container */
-  top: 20px; /* Aligns it with the top of the model box */
-  left: 10px; /* Positions it on the left side */
+  position: absolute; /* Keeps it positioned relative to its parent container */
+  top: 0; /* Aligns it with the top of the parent container */
+  left: -230px; /* Moves it to the left of the model box */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
   width: 205px;
-  z-index: 3; /* Ensures it doesn't overlap other elements */
+  z-index: 2; /* Ensures it doesn't overlap the model box */
 }
 
 /* Adjustments for "About This Site" Section */
