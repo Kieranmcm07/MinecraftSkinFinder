@@ -105,8 +105,8 @@ body {
 /* Recent Searches Section */
 .recent-searches-container {
   position: absolute; /* Keeps it positioned relative to its parent container */
-  top: 0; /* Aligns it with the top of the parent container */
-  left: -230px; /* Moves it to the left of the model box */
+  top: 200px; /* Adjust this value to align with the box on the right */
+  left: -250px; /* Moves it to the left of the model box */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
