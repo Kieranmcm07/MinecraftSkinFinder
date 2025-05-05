@@ -1,6 +1,33 @@
 let currentUUID = null;
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
-const popularPlayers = ["Notch", "Dream", "Technoblade", "Skeppy", "DanTDM"];
+const popularPlayers = [
+  "Notch",
+  "Dream",
+  "Technoblade",
+  "Skeppy",
+  "DanTDM",
+  "CaptainSparklez",
+  "Grian",
+  "MumboJumbo",
+  "iJevin",
+  "GoodTimesWithScar",
+  "Iskall85",
+  "Xisuma",
+  "FalseSymmetry",
+  "Cubfan135",
+  "ImpulseSV",
+  "TangoTek",
+  "ZombieCleo",
+  "Bdubs",
+  "Etho",
+  "Hypixel",
+  "StampyLongHead",
+  "PrestonPlayz",
+  "Vikkstar123",
+  "JeromeASF",
+  "SSundee",
+  "PopularMMOs",
+];
 
 // Debounce function to prevent spamming
 let debounceTimer;
@@ -25,7 +52,9 @@ async function loadSkin() {
     downloadLink.classList.add("hidden");
 
     const response = await fetch(
-      `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
+      `https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
+        username
+      )}`
     );
 
     if (!response.ok) throw new Error("Player not found");
