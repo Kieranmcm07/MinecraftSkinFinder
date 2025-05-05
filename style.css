@@ -104,9 +104,9 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: fixed; /* Change to fixed to keep it on the left side */
-  top: 100px;
-  left: 25px;
+  position: fixed; /* Keep it fixed on the left side */
+  bottom: 20px; /* Align it with the "Created by KieranMc" box */
+  left: 20px; /* Position it on the left side */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
