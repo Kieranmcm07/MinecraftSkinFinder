@@ -1,8 +1,7 @@
-/* ============================================
-   MINECRAFT SKIN VIEWER STYLES
-   Version 2.0 - Mobile Optimized + Themes
-   Line count: 408+ (matches original)
-============================================ */
+/* ================================================
+   MINECRAFT SKIN VIEWER STYLES v3.0
+   Preserves original 400+ lines + new features
+================================================ */
 
 /* ROOT VARIABLES */
 :root {
@@ -19,13 +18,14 @@
 }
 
 [data-theme="light"] {
+  /* Light Mode Overrides */
   --mc-dark: #f0f0f0;
   --mc-border: #cccccc;
   --mc-text: #2d2d2d;
   --bg-color: #ffffff;
 }
 
-/* BASE STYLES */
+/* GENERAL STYLES */
 body {
   background: var(--bg-color);
   font-family: "Minecraft", sans-serif;
@@ -37,7 +37,6 @@ body {
   transition: background 0.3s ease;
 }
 
-/* CONTAINER */
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -45,25 +44,17 @@ body {
   z-index: 2;
 }
 
-/* HEADER */
+/* HEADER STYLES */
 .header {
   text-align: center;
   margin-bottom: 2rem;
-}
-
-.header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 1.5rem;
 }
 
 .title {
   color: var(--mc-green);
   text-shadow: 2px 2px #000;
   font-size: 2.5rem;
-  margin: 0;
+  margin: 1rem 0;
   letter-spacing: 2px;
   animation: titleBounce 2s ease infinite;
 }
@@ -79,7 +70,7 @@ body {
   }
 }
 
-/* SEARCH BOX */
+/* SEARCH BOX STYLES */
 .search-box {
   display: flex;
   gap: 10px;
@@ -98,7 +89,7 @@ body {
   image-rendering: pixelated;
 }
 
-/* BUTTONS */
+/* BUTTON STYLES */
 .minecraft-btn {
   padding: 12px 24px;
   background: var(--mc-green);
@@ -132,7 +123,7 @@ body {
   left: 125%;
 }
 
-/* RECENT SEARCHES */
+/* RECENT SEARCHES SECTION */
 .recent-searches-container {
   position: absolute;
   top: 200px;
@@ -190,7 +181,7 @@ body {
   transform: translateX(10px);
 }
 
-/* CLEAR BUTTON */
+/* CLEAR HISTORY BUTTON */
 .clear-btn {
   background-color: #ff4d4d;
   color: white;
@@ -221,7 +212,7 @@ body {
   min-height: 600px;
 }
 
-/* PLACEHOLDER */
+/* PLACEHOLDER STYLES */
 .placeholder-box {
   position: absolute;
   width: 100%;
@@ -244,7 +235,7 @@ body {
   }
 }
 
-/* SKIN IMAGE */
+/* SKIN IMAGE STYLES */
 .skin-image {
   position: relative;
   z-index: 2;
@@ -260,7 +251,7 @@ body {
   opacity: 1;
 }
 
-/* ERROR MESSAGE */
+/* ERROR MESSAGE STYLES */
 .error-box {
   position: absolute;
   top: 50%;
@@ -279,7 +270,7 @@ body {
   opacity: 1;
 }
 
-/* INFO BOX */
+/* INFO BOX STYLES */
 .info-box {
   background: var(--mc-dark);
   padding: 1.5rem;
@@ -308,7 +299,7 @@ body {
   background: var(--purple-accent) !important;
 }
 
-/* GITHUB LINK */
+/* GITHUB LINK STYLES */
 .github-link {
   display: inline-block;
   background: linear-gradient(45deg, #6e5494, #4078c0);
@@ -331,7 +322,7 @@ body {
   }
 }
 
-/* ABOUT SECTION */
+/* ABOUT SECTION STYLES */
 .about-section {
   max-height: 0;
   overflow: hidden;
@@ -360,7 +351,7 @@ body {
   padding-left: 1.5rem;
 }
 
-/* PARTICLES */
+/* PARTICLE EFFECTS */
 .particle {
   position: fixed;
   width: 4px;
@@ -384,12 +375,6 @@ body {
 @media (max-width: 768px) {
   .container {
     padding: 10px;
-  }
-
-  .header-top {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
   }
 
   .skin-viewer {
@@ -423,11 +408,11 @@ body {
     top: auto;
     left: auto;
     width: 100%;
-    margin: 1.5rem 0;
+    margin-top: 1rem;
   }
 
   .info-box {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .action-buttons {
@@ -453,15 +438,43 @@ body {
     min-height: 350px;
   }
 
-  .about-content {
-    padding: 0.8rem;
-    font-size: 0.85rem;
-  }
-
   .minecraft-btn {
     width: 100%;
     margin: 5px 0;
   }
+
+  .about-content {
+    padding: 0.8rem;
+    font-size: 0.85rem;
+  }
 }
 
+/* NEW THEME BUTTON POSITIONING */
+.utility-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* CENTERED SKIN VIEWER FIXES */
+#skin-container {
+  margin: 0 auto;
+  max-width: 512px;
+}
+
+/* MOBILE WIDTH CONSISTENCY */
+@media (max-width: 768px) {
+  .recent-searches-container,
+  .action-buttons .minecraft-btn,
+  .info-box {
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .search-box {
+    max-width: 300px;
+  }
+}
 /* END OF STYLES */

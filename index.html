@@ -11,16 +11,7 @@
   <body>
     <div class="container">
       <header class="header">
-        <div class="header-top">
-          <h1 class="title">MINECRAFT SKIN VIEWER</h1>
-          <button
-            onclick="toggleTheme()"
-            class="minecraft-btn hover-glow theme-btn"
-          >
-            <span class="btn-shine"></span>
-            🌓 THEME
-          </button>
-        </div>
+        <h1 class="title">MINECRAFT SKIN VIEWER</h1>
         <div class="search-box">
           <input
             type="text"
@@ -72,10 +63,16 @@
               >
               On GitHub
             </h3>
-            <button onclick="toggleAbout()" class="minecraft-btn hover-glow">
-              <span class="btn-shine"></span>
-              ℹ️ About This Site
-            </button>
+            <div class="utility-buttons">
+              <button onclick="toggleTheme()" class="minecraft-btn hover-glow">
+                <span class="btn-shine"></span>
+                🌓 THEME
+              </button>
+              <button onclick="toggleAbout()" class="minecraft-btn hover-glow">
+                <span class="btn-shine"></span>
+                ℹ️ ABOUT
+              </button>
+            </div>
             <div class="about-section">
               <div class="about-content">
                 <h4>🌟 Features</h4>
@@ -101,6 +98,7 @@
               </div>
             </div>
           </div>
+
           <div class="action-buttons">
             <a
               id="download-link"
