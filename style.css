@@ -109,6 +109,8 @@ body {
   padding: 1rem;
   margin-top: 5px; /* Reduced gap */
   margin-bottom: 10px;
+  max-height: 150px; /* Set a fixed height */
+  overflow-y: auto; /* Enable scrolling when content exceeds height */
 }
 
 /* Remove bullet points from Recent Searches */
