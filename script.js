@@ -111,7 +111,7 @@ function randomSkin(retries = 3) {
       console.log("Player loaded successfully.");
     })
     .catch((error) => {
-      if (retries > 0) {
+      if (error.message === "Player not found" && retries > 0) {
         console.warn(`Retrying... (${3 - retries + 1} attempt)`);
         setTimeout(() => randomSkin(retries - 1), 1000); // Retry after 1 second
       } else {
