@@ -104,36 +104,55 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: absolute; /* Keeps it positioned relative to its parent container */
-  top: 200px; /* Adjust this value to align with the box on the right */
-  left: -250px; /* Moves it to the left of the model box */
+  position: absolute;
+  top: 200px;
+  left: -250px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
   width: 205px;
-  z-index: 2; /* Ensures it doesn't overlap the model box */
+  z-index: 2;
 }
 
-/* Adjustments for "About This Site" Section */
-.about-section.expanded ~ .recent-searches-container {
-  bottom: 20px; /* Keep the bottom position fixed */
-}
-
-/* Remove bullet points from Recent Searches */
 .no-bullets {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Recent Search Items */
 .skin-history-item {
   padding: 12px;
   margin: 8px 0;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards !important;
 }
 
 .skin-history-item:hover {
@@ -141,11 +160,10 @@ body {
   transform: translateX(10px);
 }
 
-/* Clear History Button */
 .clear-btn {
   background-color: #ff4d4d;
   color: white;
-  border: 3px solid var(--mc-border); /* Added outline */
+  border: 3px solid var(--mc-border);
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
@@ -274,20 +292,6 @@ body {
   50% {
     transform: translateY(-3px);
   }
-}
-
-.skin-history-container {
-  position: fixed;
-  right: 30px;
-  top: 200px;
-  background: var(--mc-dark);
-  border: 3px solid var(--mc-border);
-  padding: 1rem;
-  width: 220px;
-  max-height: 60vh;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 4px 4px 0 var(--mc-border);
 }
 
 .about-section {

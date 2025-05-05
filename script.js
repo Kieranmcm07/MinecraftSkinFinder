@@ -29,8 +29,8 @@ const popularPlayers = [
   "PopularMMOs",
 ];
 
-let lastRandomPlayer = null; // Keep track of the last random player
-let isRandomCooldown = false; // Cooldown flag for the random button
+let lastRandomPlayer = null;
+let isRandomCooldown = false;
 
 // Debounce function to prevent spamming
 let debounceTimer;
@@ -77,9 +77,9 @@ async function loadSkin() {
   } catch (error) {
     showErrorState(error.message);
     document.querySelector(".placeholder-box").style.opacity = "1";
-    const skinImg = document.getElementById("skin-image"); // Ensure skinImg is defined
+    const skinImg = document.getElementById("skin-image");
     skinImg.classList.remove("loaded");
-    throw error; // Re-throw the error for retry logic
+    throw error;
   }
 }
 
@@ -116,7 +116,7 @@ function randomSkin(retries = 3) {
       popularPlayers[Math.floor(Math.random() * popularPlayers.length)];
   } while (username === lastRandomPlayer && popularPlayers.length > 1);
 
-  lastRandomPlayer = username; // Update the last random player
+  lastRandomPlayer = username;
   document.getElementById("username").value = username;
 
   loadSkin()
@@ -126,7 +126,7 @@ function randomSkin(retries = 3) {
     .catch((error) => {
       if (error.message === "Player not found" && retries > 0) {
         console.warn(`Retrying... (${3 - retries + 1} attempt)`);
-        setTimeout(() => randomSkin(retries - 1), 1000); // Retry after 1 second
+        setTimeout(() => randomSkin(retries - 1), 1000);
       } else {
         console.error("All retries failed:", error);
         showErrorState("Failed to load a random player. Please try again.");
@@ -138,7 +138,7 @@ function randomSkin(retries = 3) {
 function updateHistory(username) {
   if (!skinHistory.includes(username)) {
     skinHistory.unshift(username);
-    if (skinHistory.length > 10) skinHistory.pop(); // Limit to 10 entries
+    if (skinHistory.length > 10) skinHistory.pop();
     localStorage.setItem("skinHistory", JSON.stringify(skinHistory));
     renderHistory();
   }
@@ -161,9 +161,20 @@ function renderHistory() {
 
 // Clear History Function
 function clearHistory() {
-  skinHistory = [];
-  localStorage.removeItem("skinHistory");
-  renderHistory();
+  const list = document.getElementById("recent-searches-list");
+  const items = list.querySelectorAll("li");
+
+  // Add fade-out animation to all items
+  items.forEach((item) => {
+    item.classList.add("fade-out");
+  });
+
+  // Wait for animation to complete before clearing
+  setTimeout(() => {
+    skinHistory = [];
+    localStorage.removeItem("skinHistory");
+    renderHistory();
+  }, 500);
 }
 
 // Display error messages
