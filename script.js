@@ -51,10 +51,9 @@ async function loadSkin() {
     skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
 
+    // Use Netlify function to fetch UUID
     const response = await fetch(
-      `https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
-        username
-      )}`
+      `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
 
     if (!response.ok) throw new Error("Player not found");
