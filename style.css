@@ -104,7 +104,7 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: fixed; /* Keeps it in place while scrolling */
+  position: relative; /* Keeps it in place while scrolling */
   bottom: 20px; /* Aligns with the "Created by KieranMc" box */
   left: 20px; /* Positions it on the left side */
   background: var(--mc-dark);
