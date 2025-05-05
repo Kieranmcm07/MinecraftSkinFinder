@@ -206,14 +206,3 @@ document.getElementById("download-link").addEventListener("click", (e) => {
 window.addEventListener("load", () => {
   renderHistory();
 });
-
-document.addEventListener("DOMContentLoaded", () => {
-  const randomButton = document.getElementById("random-button");
-
-  if (!randomButton) {
-    console.error("Random button not found in the DOM.");
-    return;
-  }
-
-  randomButton.addEventListener("click", () => randomSkin());
-});
