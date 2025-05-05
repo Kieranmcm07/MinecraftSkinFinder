@@ -1,5 +1,10 @@
+// ======================
+// CORE VARIABLES
+// ======================
 let currentUUID = null;
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
+let isDarkMode = true; // NEW THEME VARIABLE
+
 const popularPlayers = [
   "Notch",
   "Dream",
@@ -29,17 +34,24 @@ const popularPlayers = [
   "PopularMMOs",
 ];
 
+// ======================
+// RANDOM SKIN SYSTEM
+// ======================
 let lastRandomPlayer = null;
 let isRandomCooldown = false;
 
-// Debounce function to prevent spamming
+// ======================
+// DEBOUNCE FUNCTION
+// ======================
 let debounceTimer;
 function debounce(func, delay) {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(func, delay);
 }
 
-// Load skin by username
+// ======================
+// MAIN SKIN LOADER
+// ======================
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
   if (!username) return showErrorState("Please enter a username!");
@@ -54,7 +66,7 @@ async function loadSkin() {
     skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
 
-    // Call the Netlify function to fetch UUID
+    // UUID Fetch
     const response = await fetch(
       `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
@@ -64,7 +76,7 @@ async function loadSkin() {
     const data = await response.json();
     currentUUID = data.id;
 
-    // Load new skin
+    // Image Load
     skinImg.src = `https://crafatar.com/renders/body/${currentUUID}?size=512&overlay&t=${Date.now()}`;
 
     skinImg.onload = () => {
@@ -83,7 +95,9 @@ async function loadSkin() {
   }
 }
 
-// Fetch and display a random skin with retry logic and cooldown
+// ======================
+// RANDOM SKIN FUNCTION
+// ======================
 function randomSkin(retries = 3) {
   const randomButton = document.getElementById("random-button");
 
@@ -97,20 +111,18 @@ function randomSkin(retries = 3) {
     return;
   }
 
-  // Disable the button and set cooldown
+  // Cooldown system
   isRandomCooldown = true;
   randomButton.disabled = true;
 
-  // Reset cooldown after 1 second
   const resetCooldown = () => {
     isRandomCooldown = false;
     randomButton.disabled = false;
   };
   setTimeout(resetCooldown, 1000);
 
+  // Player selection logic
   let username;
-
-  // Ensure the new random player is different from the last one
   do {
     username =
       popularPlayers[Math.floor(Math.random() * popularPlayers.length)];
@@ -134,7 +146,9 @@ function randomSkin(retries = 3) {
     });
 }
 
-// Update Recent Searches
+// ======================
+// SEARCH HISTORY SYSTEM
+// ======================
 function updateHistory(username) {
   if (!skinHistory.includes(username)) {
     skinHistory.unshift(username);
@@ -144,7 +158,6 @@ function updateHistory(username) {
   }
 }
 
-// Render Recent Searches
 function renderHistory() {
   const historyContainer = document.getElementById("recent-searches-list");
   historyContainer.innerHTML = skinHistory
@@ -159,7 +172,9 @@ function renderHistory() {
     .join("");
 }
 
-// Clear History Function
+// ======================
+// HISTORY CLEAR FUNCTION
+// ======================
 function clearHistory() {
   const list = document.getElementById("recent-searches-list");
   const items = list.querySelectorAll("li");
@@ -175,7 +190,9 @@ function clearHistory() {
   }, 500);
 }
 
-// Display error messages
+// ======================
+// ERROR HANDLING SYSTEM
+// ======================
 function showErrorState(message) {
   const errorBox = document.getElementById("error-message");
   errorBox.querySelector("p").textContent = message;
@@ -187,13 +204,32 @@ function hideErrorState() {
   document.getElementById("error-message").classList.remove("visible");
 }
 
-// Toggle About Section
+// ======================
+// ABOUT SECTION TOGGLE
+// ======================
 function toggleAbout() {
   const aboutSection = document.querySelector(".about-section");
   aboutSection.classList.toggle("expanded");
 }
 
-// Updated Download Skin Functionality
+// ======================
+// THEME MANAGEMENT SYSTEM (NEW)
+// ======================
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
+  localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  isDarkMode = savedTheme === "dark";
+  document.body.setAttribute("data-theme", savedTheme);
+}
+
+// ======================
+// DOWNLOAD FUNCTIONALITY
+// ======================
 document
   .getElementById("download-link")
   .addEventListener("click", async (e) => {
@@ -208,20 +244,20 @@ document
     const downloadUrl = `https://crafatar.com/skins/${currentUUID}`;
 
     try {
-      // Show loading state
+      // Loading state
       const downloadBtn = document.getElementById("download-link");
       const originalText = downloadBtn.innerHTML;
       downloadBtn.innerHTML = '<span class="btn-shine"></span> DOWNLOADING...';
       downloadBtn.disabled = true;
 
-      // Fetch the skin image
+      // Fetch and process
       const response = await fetch(downloadUrl);
       if (!response.ok) throw new Error("Failed to fetch skin");
 
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
 
-      // Create download link
+      // Create hidden link
       const link = document.createElement("a");
       link.href = blobUrl;
       link.download = `${username}_skin.png`;
@@ -250,7 +286,10 @@ document
     }
   });
 
-// Initial setup
+// ======================
+// INITIALIZATION
+// ======================
 window.addEventListener("load", () => {
   renderHistory();
+  initTheme(); // Initialize theme system
 });
