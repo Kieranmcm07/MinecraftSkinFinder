@@ -107,8 +107,6 @@ function randomSkin(retries = 3) {
     randomButton.disabled = false;
   };
 
-  setTimeout(resetCooldown, 1000);
-
   let username;
 
   // Ensure the new random player is different from the last one
