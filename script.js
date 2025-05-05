@@ -51,11 +51,9 @@ async function loadSkin() {
     skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
 
-    // Use a CORS proxy to fetch UUID
+    // Call the Netlify function to fetch UUID
     const response = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
-        username
-      )}`
+      `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
     );
 
     if (!response.ok) throw new Error("Player not found");
@@ -76,6 +74,7 @@ async function loadSkin() {
   } catch (error) {
     showErrorState(error.message);
     document.querySelector(".placeholder-box").style.opacity = "1";
+    const skinImg = document.getElementById("skin-image"); // Ensure skinImg is defined
     skinImg.classList.remove("loaded");
   }
 }

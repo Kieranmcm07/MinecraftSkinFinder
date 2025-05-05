@@ -1,5 +1,4 @@
-// filepath: c:\Users\kiera\Documents\Scripts\Websites\MinecraftSkinFinder\netlify\functions\get-uuid.js
-const fetch = require("node-fetch");
+const https = require("https");
 
 exports.handler = async (event, context) => {
   const { username } = event.queryStringParameters;
@@ -12,20 +11,32 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const response = await fetch(
-      `https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
-        username
-      )}`
-    );
+    const url = `https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
+      username
+    )}`;
 
-    if (response.status === 204 || response.status >= 400) {
-      return {
-        statusCode: 404,
-        body: JSON.stringify({ error: "Player not found" }),
-      };
-    }
+    const data = await new Promise((resolve, reject) => {
+      https
+        .get(url, (res) => {
+          let body = "";
 
-    const data = await response.json();
+          res.on("data", (chunk) => {
+            body += chunk;
+          });
+
+          res.on("end", () => {
+            if (res.statusCode === 204 || res.statusCode >= 400) {
+              reject(new Error("Player not found"));
+            } else {
+              resolve(JSON.parse(body));
+            }
+          });
+        })
+        .on("error", (err) => {
+          reject(err);
+        });
+    });
+
     return {
       statusCode: 200,
       body: JSON.stringify(data),
