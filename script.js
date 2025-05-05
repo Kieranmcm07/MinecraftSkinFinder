@@ -2,15 +2,6 @@ let currentUUID = null;
 let skinHistory = JSON.parse(localStorage.getItem("skinHistory")) || [];
 const popularPlayers = ["Notch", "Dream", "Technoblade", "Skeppy", "DanTDM"];
 
-// Create particles
-for (let i = 0; i < 50; i++) {
-  const particle = document.createElement("div");
-  particle.className = "particle";
-  particle.style.left = Math.random() * 100 + "vw";
-  particle.style.animationDelay = Math.random() * 5 + "s";
-  document.body.appendChild(particle);
-}
-
 // Debounce function to prevent spamming
 let debounceTimer;
 function debounce(func, delay) {
@@ -18,6 +9,7 @@ function debounce(func, delay) {
   debounceTimer = setTimeout(func, delay);
 }
 
+// Load skin by username
 async function loadSkin() {
   const username = document.getElementById("username").value.trim();
   if (!username) return showErrorState("Please enter a username!");
@@ -58,6 +50,7 @@ async function loadSkin() {
   }
 }
 
+// Fetch and display a random skin
 function randomSkin() {
   debounce(() => {
     const username =
@@ -67,6 +60,7 @@ function randomSkin() {
   }, 300); // 300ms debounce delay
 }
 
+// Update Recent Searches
 function updateHistory(username) {
   if (!skinHistory.includes(username)) {
     skinHistory.unshift(username);
@@ -76,20 +70,29 @@ function updateHistory(username) {
   }
 }
 
+// Render Recent Searches
 function renderHistory() {
-  const historyContainer = document.getElementById("skin-history");
+  const historyContainer = document.getElementById("recent-searches-list");
   historyContainer.innerHTML = skinHistory
     .map(
       (username) => `
-    <div class="skin-history-item" 
-         onclick="document.getElementById('username').value='${username}'; loadSkin()">
+    <li class="skin-history-item" 
+        onclick="document.getElementById('username').value='${username}'; loadSkin()">
       👤 ${username}
-    </div>
+    </li>
   `
     )
     .join("");
 }
 
+// Clear History Function
+function clearHistory() {
+  skinHistory = [];
+  localStorage.removeItem("skinHistory");
+  renderHistory();
+}
+
+// Display error messages
 function showErrorState(message) {
   const errorBox = document.getElementById("error-message");
   errorBox.querySelector("p").textContent = message;
@@ -101,35 +104,7 @@ function hideErrorState() {
   document.getElementById("error-message").classList.remove("visible");
 }
 
-function toggleAbout() {
-  document.querySelector(".about-section").classList.toggle("expanded");
-}
-
-document
-  .getElementById("download-link")
-  .addEventListener("click", function (e) {
-    e.preventDefault();
-
-    if (!currentUUID) {
-      showErrorState("No skin loaded to download!");
-      return;
-    }
-
-    const username =
-      document.getElementById("username").value.trim() || "minecraft";
-    const downloadUrl = `https://crafatar.com/skins/${currentUUID}?t=${Date.now()}`;
-
-    // Create temporary link
-    const link = document.createElement("a");
-    link.href = downloadUrl;
-    link.download = `${username}_skin.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  });
-
 // Initial setup
 window.addEventListener("load", () => {
-  document.querySelector(".placeholder-box").style.opacity = "1";
   renderHistory();
 });
