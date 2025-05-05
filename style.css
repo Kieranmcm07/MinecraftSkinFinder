@@ -105,8 +105,8 @@ body {
 /* Recent Searches Section */
 .recent-searches-container {
   position: fixed; /* Change to fixed to keep it on the left side */
-  top: 100px; /* Adjust the vertical position */
-  left: 20px; /* Position it on the left side */
+  top: 100px;
+  left: 25px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
