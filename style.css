@@ -104,13 +104,17 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
+  position: fixed; /* Make it fixed to stay visible */
+  top: 20px; /* Adjust the position as needed */
+  right: 20px; /* Align it to the right */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
-  margin-top: 5px; /* Reduced gap */
-  margin-bottom: 10px;
-  max-height: 150px; /* Set a fixed height */
-  overflow-y: auto; /* Enable scrolling when content exceeds height */
+  width: 250px; /* Set a fixed width */
+  max-height: 300px; /* Set a fixed height */
+  overflow-y: auto; /* Enable scrolling for overflow content */
+  z-index: 1000; /* Ensure it stays above other elements */
+  box-shadow: 4px 4px 0 var(--mc-border);
 }
 
 /* Remove bullet points from Recent Searches */
@@ -118,6 +122,21 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* Recent Search Items */
+.skin-history-item {
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skin-history-item:hover {
+  background: var(--mc-green);
+  transform: translateX(10px);
 }
 
 /* Clear History Button */
@@ -267,20 +286,6 @@ body {
   overflow-y: auto;
   z-index: 1000;
   box-shadow: 4px 4px 0 var(--mc-border);
-}
-
-.skin-history-item {
-  padding: 12px;
-  margin: 8px 0;
-  background: var(--mc-dark);
-  border: 3px solid var(--mc-border);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.skin-history-item:hover {
-  background: var(--mc-green);
-  transform: translateX(10px);
 }
 
 .about-section {

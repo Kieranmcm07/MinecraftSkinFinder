@@ -85,14 +85,19 @@ async function loadSkin() {
 
 // Fetch and display a random skin with retry logic and cooldown
 function randomSkin(retries = 3) {
+  const randomButton = document.getElementById("random-button"); // Assuming the button has this ID
+
   if (isRandomCooldown) {
     showErrorState("Please wait before trying again.");
     return;
   }
 
-  isRandomCooldown = true; // Set cooldown
+  // Disable the button and set cooldown
+  isRandomCooldown = true;
+  randomButton.disabled = true;
   setTimeout(() => {
-    isRandomCooldown = false; // Reset cooldown after 1 second
+    isRandomCooldown = false;
+    randomButton.disabled = false; // Re-enable the button after cooldown
   }, 1000);
 
   let username;
