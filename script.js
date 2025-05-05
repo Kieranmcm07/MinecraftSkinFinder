@@ -164,12 +164,10 @@ function clearHistory() {
   const list = document.getElementById("recent-searches-list");
   const items = list.querySelectorAll("li");
 
-  // Add fade-out animation to all items
   items.forEach((item) => {
     item.classList.add("fade-out");
   });
 
-  // Wait for animation to complete before clearing
   setTimeout(() => {
     skinHistory = [];
     localStorage.removeItem("skinHistory");
@@ -195,23 +193,62 @@ function toggleAbout() {
   aboutSection.classList.toggle("expanded");
 }
 
-// Download Skin Functionality
-document.getElementById("download-link").addEventListener("click", (e) => {
-  e.preventDefault();
-  if (!currentUUID) {
-    showErrorState("No skin loaded to download!");
-    return;
-  }
-  const username =
-    document.getElementById("username").value.trim() || "minecraft";
-  const downloadUrl = `https://crafatar.com/skins/${currentUUID}`;
-  const link = document.createElement("a");
-  link.href = downloadUrl;
-  link.download = `${username}_skin.png`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-});
+// Updated Download Skin Functionality
+document
+  .getElementById("download-link")
+  .addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (!currentUUID) {
+      showErrorState("No skin loaded to download!");
+      return;
+    }
+
+    const username =
+      document.getElementById("username").value.trim() || "minecraft";
+    const downloadUrl = `https://crafatar.com/skins/${currentUUID}`;
+
+    try {
+      // Show loading state
+      const downloadBtn = document.getElementById("download-link");
+      const originalText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<span class="btn-shine"></span> DOWNLOADING...';
+      downloadBtn.disabled = true;
+
+      // Fetch the skin image
+      const response = await fetch(downloadUrl);
+      if (!response.ok) throw new Error("Failed to fetch skin");
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      // Create download link
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${username}_skin.png`;
+      link.style.display = "none";
+
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+        downloadBtn.innerHTML = originalText;
+        downloadBtn.disabled = false;
+      }, 100);
+    } catch (error) {
+      console.error("Download failed:", error);
+      showErrorState("Download failed. Please try again.");
+      document.getElementById("download-link").innerHTML =
+        '<span class="btn-shine"></span> DOWNLOAD FAILED';
+      setTimeout(() => {
+        document.getElementById("download-link").innerHTML =
+          '<span class="btn-shine"></span> DOWNLOAD SKIN';
+      }, 2000);
+    }
+  });
 
 // Initial setup
 window.addEventListener("load", () => {
