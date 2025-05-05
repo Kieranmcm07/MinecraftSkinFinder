@@ -30,6 +30,7 @@ const popularPlayers = [
 ];
 
 let lastRandomPlayer = null; // Keep track of the last random player
+let isRandomCooldown = false; // Cooldown flag for the random button
 
 // Debounce function to prevent spamming
 let debounceTimer;
@@ -82,8 +83,18 @@ async function loadSkin() {
   }
 }
 
-// Fetch and display a random skin with retry logic
+// Fetch and display a random skin with retry logic and cooldown
 function randomSkin(retries = 3) {
+  if (isRandomCooldown) {
+    showErrorState("Please wait before trying again.");
+    return;
+  }
+
+  isRandomCooldown = true; // Set cooldown
+  setTimeout(() => {
+    isRandomCooldown = false; // Reset cooldown after 1 second
+  }, 1000);
+
   let username;
 
   // Ensure the new random player is different from the last one
@@ -95,15 +106,19 @@ function randomSkin(retries = 3) {
   lastRandomPlayer = username; // Update the last random player
   document.getElementById("username").value = username;
 
-  loadSkin().catch((error) => {
-    if (retries > 0) {
-      console.warn(`Retrying... (${3 - retries + 1} attempt)`);
-      randomSkin(retries - 1); // Retry with one less attempt
-    } else {
-      console.error("All retries failed:", error);
-      showErrorState("Failed to load a random player. Please try again.");
-    }
-  });
+  loadSkin()
+    .then(() => {
+      console.log("Player loaded successfully.");
+    })
+    .catch((error) => {
+      if (retries > 0) {
+        console.warn(`Retrying... (${3 - retries + 1} attempt)`);
+        setTimeout(() => randomSkin(retries - 1), 1000); // Retry after 1 second
+      } else {
+        console.error("All retries failed:", error);
+        showErrorState("Failed to load a random player. Please try again.");
+      }
+    });
 }
 
 // Update Recent Searches
