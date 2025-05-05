@@ -105,7 +105,7 @@ body {
 /* Recent Searches Section */
 .recent-searches-container {
   position: fixed; /* Keep it fixed on the page */
-  bottom: 20px; /* Position it at the bottom */
+  bottom: 20px; /* Default position at the bottom */
   right: 20px; /* Align it to the bottom-right corner */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
@@ -118,7 +118,7 @@ body {
 
 /* Adjustments for "About This Site" Section */
 .about-section.expanded ~ .recent-searches-container {
-  bottom: 520px; /* Push the recent search box up when the "About" section is expanded */
+  bottom: 300px; /* Adjust to avoid going too far up */
 }
 
 /* Remove bullet points from Recent Searches */

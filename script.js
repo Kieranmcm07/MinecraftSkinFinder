@@ -187,7 +187,7 @@ function toggleAbout() {
 
   // Adjust the position of the recent searches box
   if (aboutSection.classList.contains("expanded")) {
-    recentSearches.style.bottom = "520px"; // Adjust to match the expanded height
+    recentSearches.style.bottom = "300px"; // Adjust to avoid going too far up
   } else {
     recentSearches.style.bottom = "20px"; // Reset to default position
   }
