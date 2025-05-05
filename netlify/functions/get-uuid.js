@@ -1,3 +1,4 @@
+// filepath: c:\Users\kiera\Documents\Scripts\Websites\MinecraftSkinFinder\netlify\functions\get-uuid.js
 const fetch = require("node-fetch");
 
 exports.handler = async (event, context) => {
@@ -30,6 +31,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify(data),
     };
   } catch (error) {
+    console.error("Error fetching player data:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Internal Server Error" }),
