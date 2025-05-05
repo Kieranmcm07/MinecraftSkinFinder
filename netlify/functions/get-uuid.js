@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+
 exports.handler = async (event, context) => {
   const { username } = event.queryStringParameters;
 
@@ -18,7 +20,7 @@ exports.handler = async (event, context) => {
     if (response.status === 204 || response.status >= 400) {
       return {
         statusCode: 404,
-        body: JSON.stringify({ error: "Username not found" }),
+        body: JSON.stringify({ error: "Player not found" }),
       };
     }
 
@@ -30,7 +32,7 @@ exports.handler = async (event, context) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed to fetch UUID" }),
+      body: JSON.stringify({ error: "Internal Server Error" }),
     };
   }
 };

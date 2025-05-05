@@ -107,7 +107,7 @@ body {
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
-  margin-top: 10px; /* Adjusted to remove extra gap */
+  margin-top: 5px; /* Reduced gap */
   margin-bottom: 10px;
 }
 
@@ -155,7 +155,7 @@ body {
   height: 100%;
   background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
     4px;
-  border: 3px solid var(--mc-border); /* Removed rounded corners */
+  border: 3px solid var(--mc-border);
   animation: placeholderPulse 2s infinite;
   opacity: 1;
   transition: opacity 0.5s ease;
@@ -207,7 +207,7 @@ body {
 .info-box {
   background: var(--mc-dark);
   padding: 1.5rem;
-  border: 3px solid var(--mc-border); /* Removed rounded corners */
+  border: 3px solid var(--mc-border);
   margin-bottom: 1rem;
   position: relative;
 }
@@ -271,7 +271,7 @@ body {
   padding: 12px;
   margin: 8px 0;
   background: var(--mc-dark);
-  border: 3px solid var(--mc-border); /* Removed rounded corners */
+  border: 3px solid var(--mc-border);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -295,7 +295,7 @@ body {
 .about-content {
   padding: 1rem;
   background: #2d2d2d;
-  border: 3px solid var(--mc-border); /* Removed rounded corners */
+  border: 3px solid var(--mc-border);
   font-size: 0.9rem;
   line-height: 1.5;
 }
