@@ -85,7 +85,12 @@ async function loadSkin() {
 
 // Fetch and display a random skin with retry logic and cooldown
 function randomSkin(retries = 3) {
-  const randomButton = document.getElementById("random-button"); // Assuming the button has this ID
+  const randomButton = document.getElementById("random-button");
+
+  if (!randomButton) {
+    console.error("Random button not found in the DOM.");
+    return;
+  }
 
   if (isRandomCooldown) {
     showErrorState("Please wait before trying again.");
@@ -101,6 +106,8 @@ function randomSkin(retries = 3) {
     isRandomCooldown = false;
     randomButton.disabled = false;
   };
+
+  setTimeout(resetCooldown, 1000);
 
   let username;
 
@@ -127,7 +134,6 @@ function randomSkin(retries = 3) {
       }
     })
     .finally(() => {
-      // Ensure cooldown is reset after the process completes
       resetCooldown();
     });
 }
@@ -203,4 +209,15 @@ document.getElementById("download-link").addEventListener("click", (e) => {
 // Initial setup
 window.addEventListener("load", () => {
   renderHistory();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const randomButton = document.getElementById("random-button");
+
+  if (!randomButton) {
+    console.error("Random button not found in the DOM.");
+    return;
+  }
+
+  randomButton.addEventListener("click", () => randomSkin());
 });
