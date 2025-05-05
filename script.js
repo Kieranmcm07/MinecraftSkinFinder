@@ -101,11 +101,12 @@ function randomSkin(retries = 3) {
   isRandomCooldown = true;
   randomButton.disabled = true;
 
-  // Ensure the cooldown is reset after 1 second
+  // Reset cooldown after 1 second
   const resetCooldown = () => {
     isRandomCooldown = false;
     randomButton.disabled = false;
   };
+  setTimeout(resetCooldown, 1000);
 
   let username;
 
@@ -130,9 +131,6 @@ function randomSkin(retries = 3) {
         console.error("All retries failed:", error);
         showErrorState("Failed to load a random player. Please try again.");
       }
-    })
-    .finally(() => {
-      resetCooldown();
     });
 }
 
