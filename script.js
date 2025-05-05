@@ -181,16 +181,7 @@ function hideErrorState() {
 // Toggle About Section
 function toggleAbout() {
   const aboutSection = document.querySelector(".about-section");
-  const recentSearches = document.querySelector(".recent-searches-container");
-
   aboutSection.classList.toggle("expanded");
-
-  // Adjust the position of the recent searches box
-  if (aboutSection.classList.contains("expanded")) {
-    recentSearches.style.bottom = "400px"; // Adjust to avoid collision
-  } else {
-    recentSearches.style.bottom = "20px"; // Reset to default position
-  }
 }
 
 // Download Skin Functionality
