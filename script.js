@@ -51,9 +51,11 @@ async function loadSkin() {
     skinImg.classList.remove("loaded");
     downloadLink.classList.add("hidden");
 
-    // Use Netlify function to fetch UUID
+    // Use a CORS proxy to fetch UUID
     const response = await fetch(
-      `/.netlify/functions/get-uuid?username=${encodeURIComponent(username)}`
+      `https://cors-anywhere.herokuapp.com/https://api.mojang.com/users/profiles/minecraft/${encodeURIComponent(
+        username
+      )}`
     );
 
     if (!response.ok) throw new Error("Player not found");
