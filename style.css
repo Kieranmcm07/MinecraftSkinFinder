@@ -117,8 +117,8 @@ body {
 }
 
 /* Adjustments for "About This Site" Section */
-.about-section.expanded + .recent-searches-container {
-  bottom: 350px; /* Push the recent search box up when the "About" section is expanded */
+.about-section.expanded ~ .recent-searches-container {
+  bottom: 400px; /* Push the recent search box up when the "About" section is expanded */
 }
 
 /* Remove bullet points from Recent Searches */
