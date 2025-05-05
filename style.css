@@ -1,26 +1,13 @@
-/* =============================================
-   MINECRAFT SKIN VIEWER STYLES v4.0
-   Preserves original 400+ line structure
-   With mobile fixes and theme system
-============================================= */
-
-/* ROOT VARIABLES */
 :root {
-  /* Original Color Scheme */
   --mc-green: #5b7c3d;
   --mc-dark: #2d2d2d;
   --mc-border: #4a4a4a;
   --mc-text: #ffffff;
-
-  /* Accent Colors */
   --purple-accent: #7c3d5b;
   --blue-accent: #4078c0;
-
-  /* New Theme Variables */
   --bg-color: #1a1a1a;
 }
 
-/* LIGHT THEME OVERRIDES */
 [data-theme="light"] {
   --mc-dark: #f0f0f0;
   --mc-border: #cccccc;
@@ -28,7 +15,6 @@
   --bg-color: #ffffff;
 }
 
-/* BASE STYLES */
 body {
   background: var(--bg-color);
   font-family: "Minecraft", sans-serif;
@@ -40,22 +26,18 @@ body {
   transition: background 0.3s ease;
 }
 
-/* CONTAINER STYLES */
 .container {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
 }
 
-/* HEADER SECTION */
 .header {
   text-align: center;
   margin-bottom: 2rem;
-  padding: 1rem 0;
 }
 
-/* TITLE ANIMATION */
 .title {
   color: var(--mc-green);
   text-shadow: 2px 2px #000;
@@ -75,14 +57,11 @@ body {
   }
 }
 
-/* SEARCH BOX STYLES */
 .search-box {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin: 1rem auto;
-  max-width: 650px;
-  padding: 0.5rem;
+  margin: 1rem 0;
 }
 
 .minecraft-input {
@@ -94,10 +73,8 @@ body {
   font-size: 1.1rem;
   width: 300px;
   image-rendering: pixelated;
-  transition: border-color 0.3s ease;
 }
 
-/* BUTTON STYLES */
 .minecraft-btn {
   padding: 12px 24px;
   background: var(--mc-green);
@@ -110,7 +87,6 @@ body {
   image-rendering: pixelated;
   position: relative;
   overflow: hidden;
-  margin: 0 5px;
 }
 
 .minecraft-btn:hover {
@@ -132,27 +108,92 @@ body {
   left: 125%;
 }
 
-/* SKIN VIEWER LAYOUT */
+.recent-searches-container {
+  position: absolute;
+  top: 200px;
+  left: -250px;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  padding: 1rem;
+  width: 205px;
+  z-index: 2;
+}
+
+.no-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skin-history-item {
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards !important;
+}
+
+.skin-history-item:hover {
+  background: var(--mc-green);
+  transform: translateX(10px);
+}
+
+.clear-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: 3px solid var(--mc-border);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
 .skin-viewer {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 1fr 300px;
   gap: 2rem;
-  margin: 2rem auto 0;
-  max-width: 1000px;
-  padding: 1rem;
+  margin-top: 2rem;
 }
 
-/* SKIN CONTAINER */
 #skin-container {
   position: relative;
-  width: 340px;
-  min-height: 680px;
-  margin: 0 auto;
-  border: 3px solid var(--mc-border);
-  background: var(--mc-dark);
+  min-height: 600px;
 }
 
-/* PLACEHOLDER STYLES */
 .placeholder-box {
   position: absolute;
   width: 100%;
@@ -175,14 +216,13 @@ body {
   }
 }
 
-/* SKIN IMAGE */
 .skin-image {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 680px;
+  height: 600px;
   object-fit: contain;
-  image-rendering: crisp-edges;
+  image-rendering: pixelated;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
@@ -191,7 +231,6 @@ body {
   opacity: 1;
 }
 
-/* ERROR MESSAGE */
 .error-box {
   position: absolute;
   top: 50%;
@@ -210,29 +249,18 @@ body {
   opacity: 1;
 }
 
-/* INFO BOX STYLES */
 .info-box {
   background: var(--mc-dark);
   padding: 1.5rem;
   border: 3px solid var(--mc-border);
-  margin-bottom: 1.5rem;
-  border-radius: 6px;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
-/* UTILITY BUTTONS */
-.utility-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 1rem;
-  justify-content: space-between;
-}
-
-/* ACTION BUTTONS */
 .action-buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 1rem 0;
 }
 
 .download-btn {
@@ -244,73 +272,10 @@ body {
   justify-content: center;
 }
 
-/* RECENT SEARCHES */
-.recent-searches-container {
-  background: var(--mc-dark);
-  border: 3px solid var(--mc-border);
-  padding: 1rem;
-  margin-top: 1.5rem;
-  border-radius: 6px;
+.random-btn {
+  background: var(--purple-accent) !important;
 }
 
-.no-bullets {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.skin-history-item {
-  padding: 12px;
-  margin: 8px 0;
-  background: var(--mc-dark);
-  border: 3px solid var(--mc-border);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-}
-
-.skin-history-item:hover {
-  background: var(--mc-green);
-  transform: translateX(10px);
-}
-
-/* CLEAR BUTTON */
-.clear-btn {
-  background-color: #ff4d4d;
-  color: white;
-  border: 3px solid var(--mc-border);
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.clear-btn:hover {
-  background-color: #ff1a1a;
-}
-
-/* ABOUT SECTION */
-.about-section {
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
-  margin-top: 1rem;
-}
-
-.about-section.expanded {
-  max-height: 500px;
-}
-
-.about-content {
-  padding: 1rem;
-  background: #2d2d2d;
-  border: 3px solid var(--mc-border);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  border-radius: 6px;
-}
-
-/* GITHUB LINK */
 .github-link {
   display: inline-block;
   background: linear-gradient(45deg, #6e5494, #4078c0);
@@ -333,63 +298,130 @@ body {
   }
 }
 
-/* MOBILE STYLES */
+.skin-history-container {
+  position: fixed;
+  right: 30px;
+  top: 200px;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  padding: 1rem;
+  width: 220px;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.about-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+}
+
+.about-section.expanded {
+  max-height: 500px;
+}
+
+.about-content {
+  padding: 1rem;
+  background: #2d2d2d;
+  border: 3px solid var(--mc-border);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.about-content h4 {
+  margin: 0.8rem 0;
+}
+
+.about-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--mc-green);
+  pointer-events: none;
+  animation: particleFloat 8s linear infinite;
+  z-index: 1;
+}
+
+@keyframes particleFloat {
+  from {
+    transform: translateY(110vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(-30vh) rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
-  /* 40+ lines of mobile styles preserved */
   .container {
     padding: 10px;
   }
 
   .skin-viewer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 1fr;
     gap: 1rem;
-    padding: 0 10px;
-  }
-
-  #skin-container {
-    width: 100%;
-    max-width: 340px;
-    min-height: 680px;
-  }
-
-  .skin-image {
-    height: 680px;
-  }
-
-  .skin-info {
-    width: 100%;
-    max-width: 340px;
-    margin: 0 auto;
   }
 
   .search-box {
     flex-wrap: wrap;
-    max-width: 340px;
   }
 
   .minecraft-input {
     width: 100%;
+    max-width: none;
   }
 
   .title {
     font-size: 1.8rem;
   }
+
+  #skin-container {
+    min-height: 400px;
+  }
+
+  .skin-image {
+    height: 400px;
+  }
+
+  .recent-searches-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .info-box {
+    margin-bottom: 1rem;
+  }
+
+  .action-buttons {
+    gap: 8px;
+  }
+
+  .skin-history-item {
+    margin: 6px 0;
+    padding: 10px;
+  }
 }
 
 @media (max-width: 480px) {
-  /* 20+ lines of small mobile adjustments */
   .title {
     font-size: 1.6rem;
   }
 
   .skin-image {
-    height: 600px;
+    height: 350px;
   }
 
   #skin-container {
-    min-height: 600px;
+    min-height: 350px;
   }
 
   .about-content {
@@ -402,5 +434,3 @@ body {
     margin: 5px 0;
   }
 }
-
-/* END OF STYLES */
