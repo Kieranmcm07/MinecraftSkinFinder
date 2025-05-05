@@ -96,12 +96,11 @@ function randomSkin(retries = 3) {
   isRandomCooldown = true;
   randomButton.disabled = true;
 
-  // Ensure the cooldown is reset after 1 second, regardless of success or failure
+  // Ensure the cooldown is reset after 1 second
   const resetCooldown = () => {
     isRandomCooldown = false;
     randomButton.disabled = false;
   };
-  setTimeout(resetCooldown, 1000);
 
   let username;
 
