@@ -29,6 +29,8 @@ const popularPlayers = [
   "PopularMMOs",
 ];
 
+let lastRandomPlayer = null; // Keep track of the last random player
+
 // Debounce function to prevent spamming
 let debounceTimer;
 function debounce(func, delay) {
@@ -76,17 +78,32 @@ async function loadSkin() {
     document.querySelector(".placeholder-box").style.opacity = "1";
     const skinImg = document.getElementById("skin-image"); // Ensure skinImg is defined
     skinImg.classList.remove("loaded");
+    throw error; // Re-throw the error for retry logic
   }
 }
 
-// Fetch and display a random skin
-function randomSkin() {
-  debounce(() => {
-    const username =
+// Fetch and display a random skin with retry logic
+function randomSkin(retries = 3) {
+  let username;
+
+  // Ensure the new random player is different from the last one
+  do {
+    username =
       popularPlayers[Math.floor(Math.random() * popularPlayers.length)];
-    document.getElementById("username").value = username;
-    loadSkin();
-  }, 300); // 300ms debounce delay
+  } while (username === lastRandomPlayer && popularPlayers.length > 1);
+
+  lastRandomPlayer = username; // Update the last random player
+  document.getElementById("username").value = username;
+
+  loadSkin().catch((error) => {
+    if (retries > 0) {
+      console.warn(`Retrying... (${3 - retries + 1} attempt)`);
+      randomSkin(retries - 1); // Retry with one less attempt
+    } else {
+      console.error("All retries failed:", error);
+      showErrorState("Failed to load a random player. Please try again.");
+    }
+  });
 }
 
 // Update Recent Searches
