@@ -106,13 +106,11 @@ body {
 .recent-searches-container {
   position: fixed; /* Keep it fixed on the page */
   bottom: 20px; /* Position it at the bottom */
-  left: 20px; /* Move it to the bottom-left corner */
+  left: 20px; /* Align it to the bottom-left corner */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
   width: 250px; /* Set a fixed width */
-  max-height: 300px; /* Set a fixed height */
-  overflow-y: auto; /* Enable scrolling for overflow content */
   z-index: 1000; /* Ensure it stays above other elements */
   box-shadow: 4px 4px 0 var(--mc-border);
 }
