@@ -104,15 +104,13 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: fixed; /* Keep it fixed on the page */
+  position: relative; /* Keep it fixed on the page */
   bottom: 20px; /* Default position at the bottom */
-  left: 0px; /* Move it further to the left to avoid collision */
+  left: -15px;
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
-  width: 250px; /* Set a fixed width */
-  z-index: 1000; /* Ensure it stays above other elements */
-  box-shadow: 4px 4px 0 var(--mc-border);
+  width: 250px;
 }
 
 /* Adjustments for "About This Site" Section */
