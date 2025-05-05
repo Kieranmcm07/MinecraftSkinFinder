@@ -95,9 +95,11 @@ function randomSkin(retries = 3) {
   // Disable the button and set cooldown
   isRandomCooldown = true;
   randomButton.disabled = true;
+
+  // Ensure the cooldown is reset after 1 second
   setTimeout(() => {
     isRandomCooldown = false;
-    randomButton.disabled = false; // Re-enable the button after cooldown
+    randomButton.disabled = false;
   }, 1000);
 
   let username;
@@ -122,6 +124,9 @@ function randomSkin(retries = 3) {
       } else {
         console.error("All retries failed:", error);
         showErrorState("Failed to load a random player. Please try again.");
+        // Reset cooldown in case of failure
+        isRandomCooldown = false;
+        randomButton.disabled = false;
       }
     });
 }

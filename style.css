@@ -104,9 +104,9 @@ body {
 
 /* Recent Searches Section */
 .recent-searches-container {
-  position: fixed; /* Make it fixed to stay visible */
-  top: 20px; /* Adjust the position as needed */
-  right: 20px; /* Align it to the right */
+  position: fixed; /* Keep it fixed on the page */
+  bottom: 20px; /* Move it to the bottom */
+  left: 20px; /* Align it to the left */
   background: var(--mc-dark);
   border: 3px solid var(--mc-border);
   padding: 1rem;
