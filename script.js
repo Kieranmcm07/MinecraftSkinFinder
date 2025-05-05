@@ -104,6 +104,30 @@ function hideErrorState() {
   document.getElementById("error-message").classList.remove("visible");
 }
 
+// Toggle About Section
+function toggleAbout() {
+  const aboutSection = document.querySelector(".about-section");
+  aboutSection.classList.toggle("expanded");
+}
+
+// Download Skin Functionality
+document.getElementById("download-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  if (!currentUUID) {
+    showErrorState("No skin loaded to download!");
+    return;
+  }
+  const username =
+    document.getElementById("username").value.trim() || "minecraft";
+  const downloadUrl = `https://crafatar.com/skins/${currentUUID}`;
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = `${username}_skin.png`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
+
 // Initial setup
 window.addEventListener("load", () => {
   renderHistory();

@@ -84,29 +84,53 @@ body {
   transform: translateY(-3px) scale(1.05);
 }
 
-.minecraft-btn::after {
-  content: "";
+.minecraft-btn .btn-shine {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.2) 50%,
-    transparent 80%
-  );
-  animation: btnShine 2.5s infinite linear;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(-45deg);
+  transition: left 0.5s ease;
 }
 
-@keyframes btnShine {
-  0% {
-    transform: translateX(-150%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(150%) rotate(45deg);
-  }
+.minecraft-btn:hover .btn-shine {
+  left: 125%;
+}
+
+/* Box around Recent Searches */
+.recent-searches-container {
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Remove bullet points from Recent Searches */
+.no-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Clear History Button */
+.clear-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
 }
 
 .skin-viewer {
