@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://mc-heads.net/combo/Nokky07" alt="Minecraft Banner" width="600">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&duration=2000&pause=1000&color=5B9C64&center=true&vCenter=true&width=800&height=100&lines=Minecraft+Skin+Viewer;View+%26+Download+Player+Skins" alt="Animated Banner">
   <h1 align="center">Minecraft Skin Viewer</h1>
   <p align="center">View and download any Minecraft player's skin instantly</p>
   <p align="center">
