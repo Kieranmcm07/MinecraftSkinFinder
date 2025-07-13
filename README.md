@@ -1,4 +1,5 @@
 <p align="center">
+  <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=400&q=80" alt="Minecraft Banner" width="100%">
   <h1 align="center">Minecraft Skin Viewer</h1>
   <p align="center">View and download any Minecraft player's skin instantly</p>
   <p align="center">
