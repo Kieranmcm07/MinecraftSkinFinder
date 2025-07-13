@@ -50,4 +50,51 @@
       </div>
     </div>
   </div>
-</div>
+</div>  
+```
+## 📁 Project Structure
+
+```
+minecraft-skin-viewer/
+├── index.html          # Main application page
+├── style.css           # Stylesheets
+├── script.js           # JavaScript functionality
+├── img/                # Image assets
+│   └── minecraft-icon.png
+├── README.md           # This documentation
+└── LICENSE             # MIT License file
+```
+
+## 🌐 Live Demo
+
+https://mcskinviewer.netlify.app/
+
+## 🛠️ Setup and Installation
+
+No installation required! Simply visit the [website](https://mcskinviewer.netlify.app/). To run locally on your machine:
+
+```batch
+git clone placeholder.com
+cd minecraft-skin-viewer
+# Open index.html in your browser
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how to help:
+1. Fork the repository
+2. Create a new branch (```git checkout -b feature/your-feature```)
+3. Commit your changes (```git commit -am 'Add some feature'```)
+4. Push to the branch (```git push origin feature/your-feature```)
+5. Open a pull request
+
+## 📜 License
+
+This project is licensed under the MIT License - see [LICENSE]()
+
+## Created with ⚡ by Kieranmcm07
+<p align="center">
+  <img src="https://img.shields.io/github/stars/Kieranmcm07/GitHub-Profile-README-Generator?style=social" />
+  <img src="https://img.shields.io/github/issues/Kieranmcm07/GitHub-Profile-README-Generator?color=purple" />
+  <img src="https://img.shields.io/github/license/Kieranmcm07/GitHub-Profile-README-Generator" />
+</p>
