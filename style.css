@@ -1,0 +1,436 @@
+:root {
+  --mc-green: #5b7c3d;
+  --mc-dark: #2d2d2d;
+  --mc-border: #4a4a4a;
+  --mc-text: #ffffff;
+  --purple-accent: #7c3d5b;
+  --blue-accent: #4078c0;
+  --bg-color: #1a1a1a;
+}
+
+[data-theme="light"] {
+  --mc-dark: #f0f0f0;
+  --mc-border: #cccccc;
+  --mc-text: #2d2d2d;
+  --bg-color: #ffffff;
+}
+
+body {
+  background: var(--bg-color);
+  font-family: "Minecraft", sans-serif;
+  color: var(--mc-text);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  overflow-x: hidden;
+  transition: background 0.3s ease;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  color: var(--mc-green);
+  text-shadow: 2px 2px #000;
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  letter-spacing: 2px;
+  animation: titleBounce 2s ease infinite;
+}
+
+@keyframes titleBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.minecraft-input {
+  padding: 12px;
+  border: 3px solid var(--mc-border);
+  background: var(--mc-dark);
+  color: var(--mc-text);
+  font-family: "Minecraft";
+  font-size: 1.1rem;
+  width: 300px;
+  image-rendering: pixelated;
+}
+
+.minecraft-btn {
+  padding: 12px 24px;
+  background: var(--mc-green);
+  border: 3px solid var(--mc-border);
+  color: white;
+  font-family: "Minecraft";
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  image-rendering: pixelated;
+  position: relative;
+  overflow: hidden;
+}
+
+.minecraft-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.minecraft-btn .btn-shine {
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: skewX(-45deg);
+  transition: left 0.5s ease;
+}
+
+.minecraft-btn:hover .btn-shine {
+  left: 125%;
+}
+
+.recent-searches-container {
+  position: absolute;
+  top: 200px;
+  left: -250px;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  padding: 1rem;
+  width: 205px;
+  z-index: 2;
+}
+
+.no-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skin-history-item {
+  padding: 12px;
+  margin: 8px 0;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards !important;
+}
+
+.skin-history-item:hover {
+  background: var(--mc-green);
+  transform: translateX(10px);
+}
+
+.clear-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: 3px solid var(--mc-border);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-btn:hover {
+  background-color: #ff1a1a;
+  transform: scale(1.05);
+}
+
+.skin-viewer {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+#skin-container {
+  position: relative;
+  min-height: 600px;
+}
+
+.placeholder-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(#1a1a1a 0% 25%, #2a2a2a 0% 50%) 50%/4px
+    4px;
+  border: 3px solid var(--mc-border);
+  animation: placeholderPulse 2s infinite;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes placeholderPulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.skin-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.skin-image.loaded {
+  opacity: 1;
+}
+
+.error-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--mc-dark);
+  padding: 2rem;
+  text-align: center;
+  border: 4px solid #ff4444;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.error-box.visible {
+  opacity: 1;
+}
+
+.info-box {
+  background: var(--mc-dark);
+  padding: 1.5rem;
+  border: 3px solid var(--mc-border);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.download-btn {
+  background: #3d7c7c;
+  text-decoration: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.random-btn {
+  background: var(--purple-accent) !important;
+}
+
+.github-link {
+  display: inline-block;
+  background: linear-gradient(45deg, #6e5494, #4078c0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: linkBounce 0.8s ease infinite;
+  text-decoration: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+@keyframes linkBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.skin-history-container {
+  position: fixed;
+  right: 30px;
+  top: 200px;
+  background: var(--mc-dark);
+  border: 3px solid var(--mc-border);
+  padding: 1rem;
+  width: 220px;
+  max-height: 60vh;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.about-section {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+}
+
+.about-section.expanded {
+  max-height: 500px;
+}
+
+.about-content {
+  padding: 1rem;
+  background: #2d2d2d;
+  border: 3px solid var(--mc-border);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.about-content h4 {
+  margin: 0.8rem 0;
+}
+
+.about-content ul {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--mc-green);
+  pointer-events: none;
+  animation: particleFloat 8s linear infinite;
+  z-index: 1;
+}
+
+@keyframes particleFloat {
+  from {
+    transform: translateY(110vh) rotate(0deg);
+  }
+  to {
+    transform: translateY(-30vh) rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .skin-viewer {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .search-box {
+    flex-wrap: wrap;
+  }
+
+  .minecraft-input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  #skin-container {
+    min-height: 400px;
+  }
+
+  .skin-image {
+    height: 400px;
+  }
+
+  .recent-searches-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .info-box {
+    margin-bottom: 1rem;
+  }
+
+  .action-buttons {
+    gap: 8px;
+  }
+
+  .skin-history-item {
+    margin: 6px 0;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .skin-image {
+    height: 350px;
+  }
+
+  #skin-container {
+    min-height: 350px;
+  }
+
+  .about-content {
+    padding: 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .minecraft-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}

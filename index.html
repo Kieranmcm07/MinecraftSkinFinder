@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Skin Viewer</title>
+    <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="https://i.imgur.com/4EeQp3P.png" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1 class="title">MINECRAFT SKIN VIEWER</h1>
+        <div class="search-box">
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter username..."
+            class="minecraft-input"
+          />
+          <button onclick="loadSkin()" class="minecraft-btn hover-glow">
+            <span class="btn-shine"></span>
+            VIEW SKIN
+          </button>
+          <button
+            id="random-button"
+            onclick="randomSkin()"
+            class="minecraft-btn random-btn hover-glow"
+          >
+            <span class="btn-shine"></span>
+            🎲 RANDOM
+          </button>
+        </div>
+      </header>
+
+      <main class="skin-viewer">
+        <div id="skin-container">
+          <div class="placeholder-box"></div>
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+            id="skin-image"
+            class="skin-image"
+            alt="Minecraft Skin"
+          />
+          <div id="error-message" class="error-box">
+            <div class="error-icon">⚠️</div>
+            <h2>ERROR</h2>
+            <p>Error message here</p>
+            <p class="signature">- Skin Viewer -</p>
+          </div>
+        </div>
+
+        <div class="skin-info">
+          <div class="info-box">
+            <h3>
+              🛠️ Created by
+              <a
+                href="https://github.com/Kieranmcm07"
+                target="_blank"
+                class="github-link"
+                >KieranMc</a
+              >
+              On GitHub
+            </h3>
+            <button onclick="toggleTheme()" class="minecraft-btn hover-glow">
+              <span class="btn-shine"></span>
+              🌓 THEME
+            </button>
+            <button onclick="toggleAbout()" class="minecraft-btn hover-glow">
+              <span class="btn-shine"></span>
+              ℹ️ ABOUT
+            </button>
+            <div class="about-section">
+              <div class="about-content">
+                <h4>🌟 Features</h4>
+                <ul>
+                  <li>🔍 Instant skin visualization</li>
+                  <li>🎨 HD skin downloads</li>
+                  <li>📜 Search history tracking</li>
+                  <li>🎲 Random popular players</li>
+                  <li>💫 Smooth animations</li>
+                </ul>
+                <h4>⚙️ Technical Specs</h4>
+                <p>
+                  Powered by Mojang API & Crafatar<br />
+                  Built with modern JavaScript/CSS<br />
+                  Open source on
+                  <a
+                    href="https://github.com/Kieranmcm07/MinecraftSkinFinder"
+                    target="_blank"
+                    class="github-link"
+                    >GitHub</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <a
+              id="download-link"
+              class="minecraft-btn download-btn hidden hover-glow"
+              href="#"
+            >
+              <span class="btn-shine"></span>
+              DOWNLOAD SKIN
+            </a>
+          </div>
+
+          <div class="recent-searches-container">
+            <h4>🔍 Recent Searches</h4>
+            <ul id="recent-searches-list" class="no-bullets"></ul>
+            <button
+              id="clear-history"
+              class="minecraft-btn clear-btn hover-glow"
+              onclick="clearHistory()"
+            >
+              <span class="btn-shine"></span>
+              CLEAR HISTORY
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
