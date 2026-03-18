@@ -9,6 +9,10 @@
   </p>
 </p>
 
+## ⚠️ IMPORTANT
+Currently this website is under going mainatance due to the API failing on the site.
+
+
 ## 🌟 Features
 
 - **Instant Skin Viewing** - See any player's skin by entering their username
