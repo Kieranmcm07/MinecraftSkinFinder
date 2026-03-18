@@ -10,7 +10,10 @@
 </p>
 
 ## ⚠️ IMPORTANT
+
 Currently this website is under going mainatance due to the API failing on the site.
+Randomely the website does no longer work and checking the errors with inspect tool
+says that it rejects the API request :(
 
 
 ## 🌟 Features
@@ -25,7 +28,7 @@ Currently this website is under going mainatance due to the API failing on the s
 
 1. **Enter Username**  
    Type any Minecraft player's name in the search field
-   
+
 2. **View Skin**  
    Click "View Skin" to render the player's skin
 
@@ -57,6 +60,7 @@ Currently this website is under going mainatance due to the API failing on the s
   </div>
 </div>  
 ```
+
 ## 📁 Project Structure
 
 ```
@@ -72,7 +76,7 @@ minecraft-skin-viewer/
 
 ## 🌐 Live Demo
 
-https://mcskinviewer.netlify.app/
+<https://mcskinviewer.netlify.app/>
 
 ## 🛠️ Setup and Installation
 
@@ -87,6 +91,7 @@ cd minecraft-skin-viewer
 ## 🤝 Contributing
 
 Contributions are welcome! Here's how to help:
+
 1. Fork the repository
 2. Create a new branch (```git checkout -b feature/your-feature```)
 3. Commit your changes (```git commit -am 'Add some feature'```)
@@ -98,6 +103,7 @@ Contributions are welcome! Here's how to help:
 This project is licensed under the MIT License - see [LICENSE]()
 
 ## Created with ⚡ by Kieranmcm07
+
 <p align="center">
   <img src="https://img.shields.io/github/stars/Kieranmcm07/GitHub-Profile-README-Generator?style=social" />
   <img src="https://img.shields.io/github/issues/Kieranmcm07/GitHub-Profile-README-Generator?color=purple" />
